@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import LoginForm from "./components/LoginForm";
+import SignUp from "./components/SignUp";
+import AboutUs from "./components/AboutUs";
+import Home from "./components/Home";
+import Services from "./components/Services";
+import NotFound from "./components/NotFound";
+import ProtestComp from "./components/ProtestComp"
+import HomeContent from './components/HomeContent';
+import Reports from './components/Reports';
+
+const App = () => (
+  <BrowserRouter>
+    <Switch>
+      <Route exact path="/login" component={LoginForm} />
+      {/* <Route exact path="/signup"  component={SignUp}/> */}
+      <ProtestComp exact path="/" component={Home} />
+      <ProtestComp exact path="/about-us" component={Services} />
+      <ProtestComp exact path="/services" component={AboutUs} />
+      <ProtestComp exact path ="/home-content" component = {HomeContent} />
+      <ProtestComp exact path = "/reports" component = {Reports} />
+      <ProtestComp path="/not-found" component={NotFound} />
+      <Redirect to="/not-found" />
+    </Switch>
+  </BrowserRouter>
+);
 
 export default App;

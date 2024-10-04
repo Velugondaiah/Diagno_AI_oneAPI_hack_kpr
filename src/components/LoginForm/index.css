@@ -1,0 +1,90 @@
+
+.main-bg-container-for-login{
+    background-color: #DBEDF4;
+    height: 100vh;
+    padding: 15px;
+}
+.login-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 380px;
+    padding: 10px 0px 10px 0px;
+    height: 100vh;
+
+}
+.image{
+    height: 130px;
+    width: 130px;
+    align-self: center;
+}
+.form-container{
+   display: flex;
+   flex-direction: column;
+}
+.sign-in-heading{
+    color: #000000;
+    font-weight: bold;
+    margin: 5px 0px 5px 0px;
+    font-size: 25px;
+    align-self: center;
+}
+.container{
+   display: flex;
+   flex-direction: column;
+   max-width: 500px;
+   margin-top: 10px;
+}
+
+.label{
+    color: #000000;
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.input-text{
+    height: 40px;
+    border: 1px solid  #cbd5e1;
+    border-radius: 7px;
+    padding-left: 15px;
+    color: #475569;
+    font-weight: 600;
+}
+.forgot-password-heading{
+    color:#3b82f6;
+    font-size: 17px;
+    margin-top: 2px;
+    align-self: flex-end;
+}
+.button{
+    background-color: #0A514E;
+    height: 40px;
+     border: none;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 7px;
+}
+.login-image{
+    height: 80vh;
+}
+@media screen and (max-width:767px) {
+    .login-image{
+        display: none;
+    }
+    
+}
+@media screen and (min-width:768px) {
+    .login-container{
+        margin-left: 60px;
+        flex-grow: 1;
+    }
+    .login-image{
+        margin-right: 50px;
+    }
+    .main-bg-container-for-login{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

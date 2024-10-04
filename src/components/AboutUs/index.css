@@ -1,0 +1,296 @@
+.scroll-container{
+    overflow: auto;
+    height: 120vh;
+    background-color: aqua;
+}
+.home-container{
+     background-image: url("https://res.cloudinary.com/dbroxheos/image/upload/v1727717354/Diagnostic_Centre_nttc07.png");
+     min-height: 100vh;
+     background-size: cover;
+     padding: 1px;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+}
+.fixed-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Keeps header on top of other content */
+    background-color: #fff; /* Use any color to avoid transparency issues */
+    padding: 10px 20px; /* Optional padding to style the header */
+  }
+.transparent-container{
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0, 0, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+
+}
+.main-heading{
+    color:#f9f9f9;
+    text-align: center;
+    width: 95%;
+    font-size: 35px;
+}
+
+.description{
+    color: #f8fafc;
+    text-align: center;
+    width: 85%;
+    font-size: 20px;
+   
+}
+.containers{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.advice-containers{
+    height: 100px;
+    width: 250px;
+    background-color: #3b82f6;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-right: 20px;
+    background-color: rgba(0, 0, 255, 0.5);
+
+    border: 2px solid #3b82f6;
+
+}
+
+.type-of-services-heading{
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 28px;
+    text-align: center;
+
+}
+
+.desc-container{
+    max-width: 700px;
+}
+
+.second-container{
+    min-height: 100vh;
+    background-color: #ffffff;
+    padding: 20px;
+}
+.second-container-image{
+    width: 100%;
+    border-radius: 15px;
+  
+    height: 300px;
+}
+
+.services-heading{
+    color: #3b82f6;
+    font-size: 25px;
+}
+
+.powerd-heading{
+    font-size: 26px;
+    margin-bottom: 2px;
+}
+
+.explore-description{
+    font-size: 20px;
+    margin-top: 2px;
+}
+
+.specialists-heading{
+    font-size: 23px;
+    color: #3b82f6;
+}
+
+.specialists-description{
+    font-size: 20px;
+}
+.specialists-containers{
+    display: flex;
+    margin-bottom: 10px;
+    max-width: 500px;
+ 
+}
+.color{
+    color: aqua;
+}
+.heading-and-des-containers{
+    margin-left: 20px;
+}
+
+
+
+
+.our-process-container{
+    min-height: 100vh;
+    background-color:  #d7dfe9;
+    padding: 20px;
+    padding-top: 100px;
+
+
+}
+
+.process-heading{
+    color: #3b82f6;
+    font-size: 30px;
+}
+
+.how-it-works-heading{
+    font-size: 27px;
+
+}
+
+.how-it-works-description{
+    font-size: 22px;
+    margin-top: 2px;
+
+}
+
+.steps-in-detail-container{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 50px;
+}
+
+.details-containers{
+    background-color: #ffffff;
+    padding: 14px;
+    border-radius: 10px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 15px;
+    max-width: 400px;
+}
+.step-heading{
+    color: #3b82f6;
+    font-size: 25px;
+
+
+}
+
+.main-step-heading{
+    font-size: 26px;
+
+}
+
+.step-description{
+
+    font-size: 20px;
+}
+
+@media screen and (min-width:576px) {
+    .main-heading{
+        font-size: 40px;
+    }
+    .description{
+        font-size: 25px;
+    }
+    .details-containers{
+        margin-left: 25px;
+    }
+    
+}
+
+@media screen and (min-width:768px) {
+    .main-heading{
+        font-size: 55px;
+        width: 70%;
+    }
+    .description{
+        font-size: 30px;
+        width: 70%;
+    }
+    .second-container{
+        display: flex;
+        align-items: center;
+    }
+    .second-container-image{
+       order: 1;
+       width: 400px;
+       height: 400px;
+       margin-left: 20px;
+    }
+    .details-containers{
+        margin-left: 40px;
+    }
+    .process-heading{
+        color: #3b82f6;
+        font-size: 38px;
+    }
+    
+    .how-it-works-heading{
+        font-size: 33px;
+    
+    }
+    
+    .how-it-works-description{
+        font-size: 26px;
+        margin-top: 2px;
+    
+    }
+}
+
+@media screen and (min-width:992px) {
+    .main-heading{
+        width: 55%;
+    }
+    .description{
+        width: 60%;
+    }
+    .second-container-image{
+        width: 500px;
+        height: 500px;
+        margin-left: 20px;
+        
+     }
+    
+
+
+    
+.services-heading{
+    color: #3b82f6;
+    font-size: 28px;
+}
+
+.powerd-heading{
+    font-size: 28px;
+    margin-bottom: 2px;
+}
+
+.explore-description{
+    font-size: 25px;
+    margin-top: 2px;
+}
+
+.specialists-heading{
+    font-size: 25px;
+    color: #3b82f6;
+}
+
+.specialists-description{
+    font-size: 23px;
+}
+}
+
+
+@media screen and (min-width:1290px) {
+    .main-heading{
+        width: 50%;
+    }
+    .description{
+        width: 55%;
+    }
+    .desc-container{
+        margin-left: 100px;  
+    }
+}
