@@ -1,0 +1,8 @@
+.unorder-list-of-doctor{
+    background-color: #D0D0D0;
+    min-height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1px;
+    padding-top: 50px;
+}

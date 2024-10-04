@@ -141,7 +141,7 @@ class SignUp extends Component{
             password
         }
         console.log(detailsOfUser)
-        const url = "http://localhost:3005/signup"
+        const url = "https://diagonalasisdb-2.onrender.com/signup"
         const options = {
             method: 'POST',
             headers: {
