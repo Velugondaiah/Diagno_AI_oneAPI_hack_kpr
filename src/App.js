@@ -8,7 +8,8 @@ import Services from "./components/Services";
 import NotFound from "./components/NotFound";
 import ProtestComp from "./components/ProtestComp"
 import HomeContent from './components/HomeContent';
-import Reports from './components/Reports';
+import AnalyseReports from './components/AnalyseReports';
+import DoctorsList from './components/DoctorsList';
 
 const App = () => (
   <BrowserRouter>
@@ -19,7 +20,8 @@ const App = () => (
       <ProtestComp exact path="/about-us" component={Services} />
       <ProtestComp exact path="/services" component={AboutUs} />
       <ProtestComp exact path ="/home-content" component = {HomeContent} />
-      <ProtestComp exact path = "/reports" component = {Reports} />
+      <ProtestComp exact path = "/reports" component = {AnalyseReports} />
+      <ProtestComp exact path = "/doctors-details"  component = {DoctorsList} />
       <ProtestComp path="/not-found" component={NotFound} />
       <Redirect to="/not-found" />
     </Switch>

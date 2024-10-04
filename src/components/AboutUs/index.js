@@ -3,6 +3,7 @@ import Header from "../Header"
 import { FaXRay } from "react-icons/fa6";
 import { FaUserDoctor } from "react-icons/fa6";
 import "./index.css"
+import { Link } from "react-router-dom";
 
 const AboutUs = () => {
     return (
@@ -17,9 +18,11 @@ const AboutUs = () => {
                 <button type = "button" className="advice-containers">
                     <h1 className="type-of-services-heading">Consult a Doctor</h1>
                 </button>
+                <Link className = "link" to = "/reports">
                 <button type = "button" className="advice-containers"> 
                     <h1 className="type-of-services-heading">Analyse Report</h1>
                 </button>
+                </Link>
                 </div>
                </div>
             </div>
