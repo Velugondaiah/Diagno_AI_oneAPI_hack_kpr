@@ -1,70 +1,52 @@
-# Getting Started with Create React App
+DIAGNO AI
+DIAGNO AI is an AI-powered technology that allows users to upload diagnostic reports and receive insightful, personalized analysis. The platform also helps users locate expert doctors in their locality, complete with consultation details, while supporting multi-language output for accessibility.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+🚀 Key Features
+Upload Diagnostic Reports: Supports reports like blood tests, X-rays, and more.
+AI-Driven Analysis: Provides information such as:
+Overview of the report.
+Symptoms and causes of potential medical conditions.
+Stages of the medical issue.
+Safety precautions to take.
+Doctor Finder: Connects users to expert doctors in their area, with details on:
+Contact information.
+Consultation fees.
+Multi-Language Support: Analyze reports in the language of your choice.
+🧑‍💻 Running the Project Locally
+To run DIAGNO AI locally, follow the instructions below:
+🛠 Technologies Used
+Frontend: React.js for building the user interface.
+Backend: Node.js for handling server-side operations and API integrations.
+Database: SQLite is used as the backend database to store user details, reports, and doctor information.
+AI & ML Models: Custom machine learning models for report analysis.
+APIs: The platform uses APIs for:
+Doctor Search: To find relevant doctors based on the user's location.
+Report Analysis: To process diagnostic report data (including images and text) and return detailed results.
+Multi-language Support: Translating analysis into the user's preferred language.
+📄 File Upload and Report Processing
+When users upload diagnostic reports or scans, the system expects the files to meet the following criteria:
 
-## Available Scripts
+Supported File Types: Images (JPEG, PNG), PDFs.
+Dimensions for Images: 244x244 pixels for uploaded scans or pictures, ensuring consistency in AI analysis.
+Users can either upload files from their devices or take pictures directly, and the platform will process them for AI-driven report analysis.
 
-In the project directory, you can run:
+🎨 Design and Prototyping
+Prototyping Tool: We used FIGMA to prototype the web pages and define user flows for a seamless experience.
+User Journey
+User Sign-Up/Sign-In (Login Page):
+Upon launching the app, users can sign up or log in to their accounts. This ensures secure access and personalized data handling.
 
-### `npm start`
+Home Page:
+After logging in, users are taken to the Home Page, where they can explore the various features of DIAGNO AI, including the ability to upload reports and navigate through the platform’s functionalities.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+About Page:
+The About Page provides users with information about how DIAGNO AI works, offering clarity on the process of report analysis and AI-driven diagnostics.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Services Page:
+On the Services Page, users can:
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Analyze their diagnostic reports using AI-powered tools.
+Book doctor consultations based on the report results.
+Username and Password Details
+Username: CHATUR
+Password: Chatur@2024
