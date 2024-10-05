@@ -1,5 +1,6 @@
-import { Link  , withRouter} from "react-router-dom";
+import { Link  , withRouter } from "react-router-dom";
 import { Component } from "react";
+import Cookies from "js-cookie"
 import { AiFillHome } from "react-icons/ai";
 import {IoReorderThreeSharp} from 'react-icons/io5'
 import { MdMedicalServices } from "react-icons/md";
@@ -10,7 +11,12 @@ import {  Sidebar,
 
 class Header extends Component{
     state = {isSidebarOpen: false}
-
+    logoutBtn = () => {
+      Cookies.remove("jwt_token"); 
+      const { history } = this.props;
+      history.replace("/login");
+    }
+    
     toggleSidebar = () => {
         this.setState(prevState => ({
           isSidebarOpen: !prevState.isSidebarOpen,
@@ -33,6 +39,7 @@ class Header extends Component{
       }
     render(){
         const {isSidebarOpen} = this.state
+        
         return(
             <>
             <nav className = "small-devices-nav-container">
@@ -57,9 +64,10 @@ class Header extends Component{
              <Link to = "/booking-history" className="link">
              <SidebarItem>Booking History</SidebarItem>
              </Link>
-            
-              <SidebarItem>Logout</SidebarItem>
-            
+             <button type = "button" className="logout" onClick={this.logoutBtn}>
+
+         Logout
+          </button>
              
           </Sidebar>
                 </div>
@@ -85,7 +93,10 @@ class Header extends Component{
                 <Sidebar isOpen={isSidebarOpen}>
               <SidebarItem>Profile</SidebarItem>
               <SidebarItem>Booking History</SidebarItem>
-              <SidebarItem>Logout</SidebarItem>
+              <button type = "button" className="logout" onClick={this.logoutBtn}>
+
+             Logout
+              </button>
              
           </Sidebar>
         </nav>

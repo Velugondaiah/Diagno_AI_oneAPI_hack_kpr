@@ -8,6 +8,10 @@
     
 
 }
+.logout{
+    background-color: transparent;
+    border: none;
+}
 .link{
     text-decoration: none;
 }
