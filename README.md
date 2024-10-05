@@ -1,63 +1,109 @@
-DIAGNO AI is an AI-powered technology that allows users to upload diagnostic reports and receive insightful, personalized analysis. The platform also helps users locate expert doctors in their locality, complete with consultation details, while supporting multi-language output for accessibility.
 
+# DIAGNO AI
 
+DIAGNO AI is an AI-powered platform that allows users to upload diagnostic reports and receive personalized, insightful analysis of their health. The system also connects users with expert doctors in their locality and provides a multi-language output for enhanced accessibility.
 
-🚀 Key Features
-Upload Diagnostic Reports: Supports reports like blood tests, X-rays, and more.
-AI-Driven Analysis: Provides information such as:
-Overview of the report.
-Symptoms and causes of potential medical conditions.
-Stages of the medical issue.
-Safety precautions to take.
-Doctor Finder: Connects users to expert doctors in their area, with details on:
-Contact information.
-Consultation fees.
-Multi-Language Support: Analyze reports in the language of your choice.
+---
 
-Username and Password Details
-Username: velugu
-Password: velugu
+## 🚀 Key Features
 
-🧑‍💻 Running the Project Locally
-To run DIAGNO AI locally, follow the instructions below:
-i) npm install
-ii) npm start
+- **Upload Diagnostic Reports**: Users can upload medical reports such as blood tests, X-rays, etc., in image or PDF format.
+- **AI-Driven Analysis**:
+  - Report Overview
+  - Potential symptoms and causes of medical conditions
+  - Stages of medical issues
+  - Safety precautions and health tips
+- **Doctor Finder**: Users can locate doctors based on their location, and view:
+  - Contact details
+  - Consultation fees
+- **Multi-Language Support**: AI-generated analysis can be translated into multiple languages, offering a personalized experience for non-native speakers.
 
-Hosted in Vercel - diagonalasis-8bka-191dopz1p-velugondaiah-garlapatis-projects.vercel.app
+---
 
-🛠 Technologies Used
-Frontend: React.js for building the user interface.
-Backend: Node.js for handling server-side operations and API integrations.
-Database: SQLite is used as the backend database to store user details, reports, and doctor information.
-AI & ML Models: Custom machine learning models for report analysis.
-APIs: The platform uses APIs for:
-Doctor Search: To find relevant doctors based on the user's location.
-Report Analysis: To process diagnostic report data (including images and text) and return detailed results.
-Multi-language Support: Translating analysis into the user's preferred language.
-📄 File Upload and Report Processing
-When users upload diagnostic reports or scans, the system expects the files to meet the following criteria:
+## 🧑‍💻 Running the Project Locally
 
-Supported File Types: Images (JPEG, PNG), PDFs.
-Dimensions for Images: 244x244 pixels for uploaded scans or pictures, ensuring consistency in AI analysis.
-Users can either upload files from their devices or take pictures directly, and the platform will process them for AI-driven report analysis.
+To run the project locally, follow these steps:
 
-🎨 Design and Prototyping
-Prototyping Tool: We used FIGMA to prototype the web pages and define user flows for a seamless experience.
-User Journey
-User Sign-Up/Sign-In (Login Page):
-Upon launching the app, users can sign up or log in to their accounts. This ensures secure access and personalized data handling.
+1. Clone the repository:
+    \`\`\`bash
+    git clone <repository-url>
+    \`\`\`
+2. Navigate to the project directory:
+    \`\`\`bash
+    cd diagonalasis
+    \`\`\`
+3. Install dependencies:
+    \`\`\`bash
+    npm install
+    \`\`\`
+4. Start the development server:
+    \`\`\`bash
+    npm start
+    \`\`\`
+5. Open [http://localhost:3000](http://localhost:3000) to view the app in your browser.
 
-Home Page:
-After logging in, users are taken to the Home Page, where they can explore the various features of DIAGNO AI, including the ability to upload reports and navigate through the platform’s functionalities.
+---
 
-About Page:
-The About Page provides users with information about how DIAGNO AI works, offering clarity on the process of report analysis and AI-driven diagnostics.
+## 📄 File Upload and Report Processing
 
-Services Page:
-On the Services Page, users can:
+- **Supported File Types**: JPEG, PNG, PDF
+- **Image Dimensions**: 244x244 pixels (recommended for uploaded scans)
+- Users can upload files or directly take pictures from the platform, which are processed for AI-driven analysis.
 
-Analyze their diagnostic reports using AI-powered tools.
-Book doctor consultations based on the report results.
+---
 
+## 🛠 Technologies Used
+
+- **Frontend**: React.js for the user interface
+- **Backend**: Node.js to handle server-side operations and API integration
+- **Database**: SQLite for storing user data, reports, and doctor information
+- **AI & ML Models**: Custom machine learning models for analyzing uploaded diagnostic reports
+- **APIs**:
+  - Doctor Search: Finds relevant doctors based on user location
+  - Report Analysis: Analyzes uploaded diagnostic reports and returns detailed health insights
+  - Multi-language Support: Translates reports into the user's preferred language
+
+---
+
+## 🌍 Hosted URL
+
+This project is hosted on Vercel: [DIAGNO AI](https://diagonalasis-8bka-191dopz1p-velugondaiah-garlapatis-projects.vercel.app)
+
+---
+
+## 🎨 Design and Prototyping
+
+We used **FIGMA** to prototype the UI and define user flows to ensure a seamless user experience.
+
+---
+
+## 📖 User Journey
+
+1. **User Sign-Up/Sign-In**:
+   - Users can sign up or log in for personalized access.
+   
+2. **Home Page**:
+   - After logging in, users can upload their reports and explore the platform’s features.
+   
+3. **About Page**:
+   - Explains how DIAGNO AI works and the AI-powered diagnostic process.
+   
+4. **Services Page**:
+   - Users can analyze their reports and book consultations with doctors based on the report results.
+
+---
+
+## 🧑‍⚕️ User Credentials for Testing
+
+- **Username**: `velugu`
+- **Password**: `velugu`
+
+---
+
+## 👨‍💻 Contributing
+
+We welcome contributions! Please feel free to fork this repository and submit pull requests.
+
+---
 
 
