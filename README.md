@@ -15,11 +15,16 @@ Consultation fees.
 Multi-Language Support: Analyze reports in the language of your choice.
 
 Username and Password Details
-Username: CHATUR
-Password: Chatur@2024
+Username: velugu
+Password: velugu
 
 🧑‍💻 Running the Project Locally
 To run DIAGNO AI locally, follow the instructions below:
+i) npm install
+ii) npm start
+
+Hosted in Vercel - diagonalasis-8bka-191dopz1p-velugondaiah-garlapatis-projects.vercel.app
+
 🛠 Technologies Used
 Frontend: React.js for building the user interface.
 Backend: Node.js for handling server-side operations and API integrations.
@@ -53,4 +58,6 @@ On the Services Page, users can:
 
 Analyze their diagnostic reports using AI-powered tools.
 Book doctor consultations based on the report results.
+
+
 
