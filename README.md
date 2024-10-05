@@ -1,70 +1,109 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# DIAGNO AI
 
-## Available Scripts
+DIAGNO AI is an AI-powered platform that allows users to upload diagnostic reports and receive personalized, insightful analysis of their health. The system also connects users with expert doctors in their locality and provides a multi-language output for enhanced accessibility.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🚀 Key Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Upload Diagnostic Reports**: Users can upload medical reports such as blood tests, X-rays, etc., in image or PDF format.
+- **AI-Driven Analysis**:
+  - Report Overview
+  - Potential symptoms and causes of medical conditions
+  - Stages of medical issues
+  - Safety precautions and health tips
+- **Doctor Finder**: Users can locate doctors based on their location, and view:
+  - Contact details
+  - Consultation fees
+- **Multi-Language Support**: AI-generated analysis can be translated into multiple languages, offering a personalized experience for non-native speakers.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 🧑‍💻 Running the Project Locally
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To run the project locally, follow these steps:
 
-### `npm run build`
+1. Clone the repository:
+    \`\`\`bash
+    git clone <repository-url>
+    \`\`\`
+2. Navigate to the project directory:
+    \`\`\`bash
+    cd diagonalasis
+    \`\`\`
+3. Install dependencies:
+    \`\`\`bash
+    npm install
+    \`\`\`
+4. Start the development server:
+    \`\`\`bash
+    npm start
+    \`\`\`
+5. Open [http://localhost:3000](http://localhost:3000) to view the app in your browser.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 📄 File Upload and Report Processing
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Supported File Types**: JPEG, PNG, PDF
+- **Image Dimensions**: 244x244 pixels (recommended for uploaded scans)
+- Users can upload files or directly take pictures from the platform, which are processed for AI-driven analysis.
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 🛠 Technologies Used
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **Frontend**: React.js for the user interface
+- **Backend**: Node.js to handle server-side operations and API integration
+- **Database**: SQLite for storing user data, reports, and doctor information
+- **AI & ML Models**: Custom machine learning models for analyzing uploaded diagnostic reports
+- **APIs**:
+  - Doctor Search: Finds relevant doctors based on user location
+  - Report Analysis: Analyzes uploaded diagnostic reports and returns detailed health insights
+  - Multi-language Support: Translates reports into the user's preferred language
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 🌍 Hosted URL
 
-## Learn More
+This project is hosted on Vercel: [DIAGNO AI](https://diagonalasis-8bka-191dopz1p-velugondaiah-garlapatis-projects.vercel.app)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 🎨 Design and Prototyping
 
-### Code Splitting
+We used **FIGMA** to prototype the UI and define user flows to ensure a seamless user experience.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## 📖 User Journey
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+1. **User Sign-Up/Sign-In**:
+   - Users can sign up or log in for personalized access.
+   
+2. **Home Page**:
+   - After logging in, users can upload their reports and explore the platform’s features.
+   
+3. **About Page**:
+   - Explains how DIAGNO AI works and the AI-powered diagnostic process.
+   
+4. **Services Page**:
+   - Users can analyze their reports and book consultations with doctors based on the report results.
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 🧑‍⚕️ User Credentials for Testing
 
-### Advanced Configuration
+- **Username**: `velugu`
+- **Password**: `velugu`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+## 👨‍💻 Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+We welcome contributions! Please feel free to fork this repository and submit pull requests.
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
