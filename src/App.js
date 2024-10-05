@@ -11,11 +11,12 @@ import HomeContent from './components/HomeContent';
 import AnalyseReports from './components/AnalyseReports';
 import DoctorsList from './components/DoctorsList';
 
+
 const App = () => (
   <BrowserRouter>
     <Switch>
       <Route exact path="/login" component={LoginForm} />
-      {/* <Route exact path="/signup"  component={SignUp}/> */}
+      <Route exact path="/signup"  component={SignUp}/>
       <ProtestComp exact path="/" component={Home} />
       <ProtestComp exact path="/about-us" component={Services} />
       <ProtestComp exact path="/services" component={AboutUs} />
