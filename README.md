@@ -1,5 +1,6 @@
-DIAGNO AI
 DIAGNO AI is an AI-powered technology that allows users to upload diagnostic reports and receive insightful, personalized analysis. The platform also helps users locate expert doctors in their locality, complete with consultation details, while supporting multi-language output for accessibility.
+
+
 
 🚀 Key Features
 Upload Diagnostic Reports: Supports reports like blood tests, X-rays, and more.
@@ -12,6 +13,11 @@ Doctor Finder: Connects users to expert doctors in their area, with details on:
 Contact information.
 Consultation fees.
 Multi-Language Support: Analyze reports in the language of your choice.
+
+Username and Password Details
+Username: CHATUR
+Password: Chatur@2024
+
 🧑‍💻 Running the Project Locally
 To run DIAGNO AI locally, follow the instructions below:
 🛠 Technologies Used
@@ -47,6 +53,4 @@ On the Services Page, users can:
 
 Analyze their diagnostic reports using AI-powered tools.
 Book doctor consultations based on the report results.
-Username and Password Details
-Username: CHATUR
-Password: Chatur@2024
+
