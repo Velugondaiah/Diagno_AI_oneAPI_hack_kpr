@@ -31,7 +31,7 @@ class DoctorsList extends Component{
     
 
     onSuccessfullDoctorsList = async () => {
-        const url = "https://diagonalasisdb-2.onrender.com/doctors"
+        const url = "https://diagonalasisdb-1.onrender.com/doctors"
         const response = await fetch(url)
         if (response.ok === true){
             const data = await response.json()

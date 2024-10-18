@@ -22,7 +22,8 @@ class LoginForm extends Component{
     event.preventDefault()
     const {username, password} = this.state
     const userDetails = {username, password}
-    const url = 'https://diagonalasisdb-2.onrender.com/login'
+    const url = 'https://diagonalasisdb-1.onrender.com/login'
+                
     const options = {
       method: 'POST',
       headers: {
