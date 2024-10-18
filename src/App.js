@@ -10,6 +10,7 @@ import ProtestComp from "./components/ProtestComp"
 import HomeContent from './components/HomeContent';
 import AnalyseReports from './components/AnalyseReports';
 import DoctorsList from './components/DoctorsList';
+import Appointments from './components/Appointments';
 
 
 const App = () => (
@@ -23,8 +24,10 @@ const App = () => (
       <ProtestComp exact path ="/home-content" component = {HomeContent} />
       <ProtestComp exact path = "/reports" component = {AnalyseReports} />
       <ProtestComp exact path = "/doctors-details"  component = {DoctorsList} />
+      <ProtestComp to ="/appointments" component={Appointments} />
       <ProtestComp path="/not-found" component={NotFound} />
       <Redirect to="/not-found" />
+    
     </Switch>
   </BrowserRouter>
 );

@@ -12,10 +12,13 @@ import {  Sidebar,
 class Header extends Component{
     state = {isSidebarOpen: false}
     logoutBtn = () => {
+      console.log("logout")
       Cookies.remove("jwt_token"); 
       const { history } = this.props;
       history.replace("/login");
+      
     }
+
     
     toggleSidebar = () => {
         this.setState(prevState => ({
@@ -64,7 +67,7 @@ class Header extends Component{
              <Link to = "/booking-history" className="link">
              <SidebarItem>Booking History</SidebarItem>
              </Link>
-             <button type = "button" className="logout" onClick={this.logoutBtn}>
+             <button type = "button" className="logout" >
 
          Logout
           </button>
@@ -93,11 +96,7 @@ class Header extends Component{
                 <Sidebar isOpen={isSidebarOpen}>
               <SidebarItem>Profile</SidebarItem>
               <SidebarItem>Booking History</SidebarItem>
-              <button type = "button" className="logout" onClick={this.logoutBtn}>
-
-             Logout
-              </button>
-             
+              <button type = "button" className="logout" onClick={this.logoutBtn}>Logout</button>
           </Sidebar>
         </nav>
             </>

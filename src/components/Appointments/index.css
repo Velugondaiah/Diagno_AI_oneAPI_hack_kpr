@@ -1,0 +1,142 @@
+/* Write your CSS here */
+.main-appointment-bg-container {
+    background-image: linear-gradient(to bottom, #fbc7d4, #9796f0);
+    min-height: 100vh;
+    padding: 1px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+  .appointment-card-container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 15px;
+    width: 90%;
+    max-width: 1000px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+  
+  .main-heading {
+    color: #171f46;
+    font-size: 25px;
+    font-family: 'Roboto';
+    font-weight: bold;
+  }
+  
+  @media screen and (min-width: 576px) {
+    .form-and-image-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .form {
+      width: 400px;
+    }
+    .appointment-card-container {
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+    .appointment-image {
+      height: 280px;
+    }
+  }
+  @media screen and (max-width: 767px) {
+    .appointment-image {
+      display: none;
+    }
+  }
+  @media screen and (min-width: 768px) {
+    .appointment-image {
+      height: 250px;
+      margin-left: 25px;
+    }
+  }
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+  .label {
+    color: #b5b7c4;
+    font-family: 'Roboto';
+    font-size: 15px;
+    font-weight: bold;
+  }
+  .input {
+    border: 2px solid #b5b7c4;
+    border-radius: 6px;
+    padding-left: 10px;
+    height: 40px;
+    margin-top: 5px;
+    font-size: 16px;
+    font-family: 'Roboto';
+    padding-right: 10px;
+  }
+  .add-button {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #ffffff;
+    background-color: #8b5cf6;
+    border-radius: 10px;
+    border: none;
+    margin-top: 10px;
+    align-self: flex-start;
+  }
+  
+  .horizontal-line {
+    border: 1px solid #b5b7c4;
+    margin-top: 25px;
+  }
+  .heading-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .list-heading {
+    color: #171f46;
+    font-size: 20px;
+    font-family: 'Roboto';
+    font-weight: bold;
+  }
+  .selected-button {
+    height: 36px;
+    width: 100px;
+    color: #9796f0;
+    background-color: #ffffff;
+    border-radius: 30px;
+    font-family: 'Roboto';
+    font-size: 18px;
+    font-weight: bold;
+    border: 2px solid #9796f0;
+  }
+  .if-selected {
+    height: 36px;
+    width: 100px;
+    background-color: #9796f0;
+    color: #ffffff;
+    border-radius: 30px;
+    font-family: 'Roboto';
+    font-size: 18px;
+    font-weight: bold;
+    border: 2px solid #9796f0;
+  }
+  .unorder-list {
+    padding-left: 0px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .radio-container{
+    display: flex;
+  }
+  
+  .radio{
+    color: blue;
+  }
+  .online{
+    color: black;
+  }

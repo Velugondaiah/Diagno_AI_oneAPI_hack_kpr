@@ -29,8 +29,8 @@ class AnalyseReport extends Component{
  
     onClickContinue = () => {
         const {history} = this.props
-        history.replace("/doctors-details")
-        
+        // history.replace("/doctors-details")
+        history.replace("/appointments")
     }
 
     handleChange = (event) => {
@@ -46,8 +46,8 @@ class AnalyseReport extends Component{
         <div className="container-for-report">
                <div className="file-upload-container">
                     <label htmlFor="file-upload" className="custom-file-upload">
-                    <FiUpload className="upload-icon" /> {/* This is the upload icon */}
-                    Upload Your Report
+                    <FiUpload className="upload-icon" /> 
+                         Upload Your Report
                     </label>
                     <input id="file-upload" className="file" type="file" />
                 </div>
@@ -70,10 +70,10 @@ class AnalyseReport extends Component{
                     </select>
                 </div>
                 </div>
-                        <Link to = "/doctors-details">
-               <button className="report-button" type = "button" onClick={this.onClickContinue}>Continue</button>
+                <Link to = "/appointments">
+                        <button className="report-button" type = "button" onClick={this.onClickContinue}>Appointment</button>
                 </Link>
-                    </div>
+                </div>
 
             </>
         )        

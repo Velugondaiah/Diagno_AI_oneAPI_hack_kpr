@@ -18,8 +18,7 @@
     justify-content: space-between;
     width: 80%;
     padding-top: 70px;
-
-
+    
 }
 .file{
     background-color: blue;
@@ -85,7 +84,8 @@
   .report-button{
     background-color: #007bff;
     height: 40px;
-    width: 140px;
+    padding-left: 15px;
+    padding-right: 15px;
     color: #ffffff;
     border-radius: 7px;
     border:none;
