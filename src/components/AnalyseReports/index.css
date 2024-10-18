@@ -91,3 +91,8 @@
     border:none;
     font-size: 25px;
   }
+  .files{
+    display: flex;
+    justify-content: space-between;
+    width: 1000px;
+  }
