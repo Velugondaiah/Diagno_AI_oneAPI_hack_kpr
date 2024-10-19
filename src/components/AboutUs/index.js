@@ -15,9 +15,11 @@ const AboutUs = () => {
                <h1 className="main-heading">Advanced Diagnostic Services</h1>
                 <p className="description">Leveraging AI to provide precise and reliable X-ray and Blood analyses...</p>
                 <div className="containers">
+                <Link className="link" to = "/reports">
                 <button type = "button" className="advice-containers">
-                    <h1 className="type-of-services-heading">Consult a Doctor</h1>
+                    <h1 className="type-of-services-heading">Analyse X-ray</h1>
                 </button>
+                </Link>
                 <Link className = "link" to = "/reports">
                 <button type = "button" className="advice-containers"> 
                     <h1 className="type-of-services-heading">Analyse Report</h1>
@@ -43,7 +45,7 @@ const AboutUs = () => {
                     </div>
 
                     <div className="specialists-containers">
-                    <FaUserDoctor size="65px"  />
+                    <FaUserDoctor size="65px" className="color"  />
                         <div  className="heading-and-des-containers" >
                             <h1  className="specialists-heading">Specialist Consultations</h1>
                             <p className="specialists-description">Connect with top healthcare specialists for expert opinions.</p>

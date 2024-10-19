@@ -11,6 +11,7 @@ import HomeContent from './components/HomeContent';
 import AnalyseReports from './components/AnalyseReports';
 import DoctorsList from './components/DoctorsList';
 import Appointments from './components/Appointments';
+import AnalyseXray from './components/AnalyseXray';
 
 
 const App = () => (
@@ -24,7 +25,9 @@ const App = () => (
       <ProtestComp exact path ="/home-content" component = {HomeContent} />
       <ProtestComp exact path = "/reports" component = {AnalyseReports} />
       <ProtestComp exact path = "/doctors-details"  component = {DoctorsList} />
+      <ProtestComp path ="/analyse-x-rays" component = {AnalyseXray} />
       <ProtestComp to ="/appointments" component={Appointments} />
+     
       <ProtestComp path="/not-found" component={NotFound} />
       <Redirect to="/not-found" />
     

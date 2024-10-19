@@ -47,12 +47,14 @@
 .report-heading{
     font-size: 18px;
     margin-bottom: 0px;
+    color: #000000;
 
 }
 
 .report-description{
     font-size: 15px;
     margin-top: 10px;
+    color: #000000;
 
 }
 

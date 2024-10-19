@@ -6,8 +6,28 @@
     align-items: flex-end;
     padding-right: 300px; 
     justify-content: space-between;
+    padding-bottom: 60px;
    
     
+}
+.result-container {
+  width: 1000px;
+  margin-left: 100px;
+  background-color: #ffffff;
+  margin-top: 35px;
+  margin-bottom: 35px;
+  padding: 20px; 
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); 
+  border-radius: 8px;
+}
+
+.loader-container{
+  width: 1000px;
+  display: flex;
+  justify-content: center;
+  height: 60vh;
+  align-items: center;
+  
 }
 .change-button-container{
     background-color: aqua;
@@ -95,4 +115,12 @@
     display: flex;
     justify-content: space-between;
     width: 1000px;
+  }
+  .result-heading{
+    color: #000000;
+    font-size: 30px;
+  }
+  .result-description{
+    color:#000000;
+    font-size: 25px;
   }

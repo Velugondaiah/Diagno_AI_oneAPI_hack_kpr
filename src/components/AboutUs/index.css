@@ -116,6 +116,7 @@
 
 .specialists-description{
     font-size: 20px;
+    color: #000000;
 }
 .specialists-containers{
     display: flex;
@@ -206,6 +207,7 @@
     .main-heading{
         font-size: 55px;
         width: 70%;
+        color: #d7dfe9;
     }
     .description{
         font-size: 30px;

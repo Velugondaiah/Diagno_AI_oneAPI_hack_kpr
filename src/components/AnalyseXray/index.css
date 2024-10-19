@@ -1,0 +1,37 @@
+/* src/App.css */
+
+body, html {
+    font-family: Arial, sans-serif;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    background-image: url('https://res.cloudinary.com/dbroxheos/image/upload/v1729288662/skeleton_w0uukr.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#chat-container {
+    border: 1px solid #ccc;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    height: 400px;
+    width: 100%;
+    max-width: 800px;
+    overflow-y: auto;
+}
+
+#file-input, #analyze-button {
+    margin-top: 20px;
+}
