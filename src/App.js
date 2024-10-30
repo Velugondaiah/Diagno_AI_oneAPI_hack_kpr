@@ -1,4 +1,5 @@
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Profile from './components/Profile';
 
 import LoginForm from "./components/LoginForm";
 import SignUp from "./components/SignUp";
@@ -12,6 +13,8 @@ import AnalyseReports from './components/AnalyseReports';
 import DoctorsList from './components/DoctorsList';
 import Appointments from './components/Appointments';
 import XrayReport from './components/XrayReport';
+import FileUpload from './components/FileUpload';
+import ReportAnalysis from './components/ReportAnalysis';
 
 
 
@@ -29,8 +32,9 @@ const App = () => (
       <ProtestComp exact path = "/doctors-details"  component = {DoctorsList} />
       <ProtestComp to ="/appointments" component={Appointments} />
       <ProtestComp path="/not-found" component={NotFound} />
-      <Redirect to="/not-found" />
-    
+      <Route path="/profile" component={Profile} />
+      <FileUpload />
+      <ReportAnalysis />
     </Switch>
   </BrowserRouter>
 );

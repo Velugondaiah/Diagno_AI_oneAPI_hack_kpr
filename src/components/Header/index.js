@@ -70,17 +70,19 @@ class Header extends Component {
               onClick={this.toggleSidebar} 
               className="menu-button"
             />
-            <Sidebar isOpen={isSidebarOpen} className="Sidebar">
+                    <Sidebar isOpen={isSidebarOpen} className="Sidebar">
+            <Link to="/profile" className="link">
               <SidebarItem>Profile</SidebarItem>
-              <SidebarItem>Booking History</SidebarItem>
-              <button 
-                type="button" 
-                className="logout" 
-                onClick={this.logoutBtn}
-              >
-                Logout
-              </button>
-            </Sidebar>
+            </Link>
+            <SidebarItem>Booking History</SidebarItem>
+            <button 
+              type="button" 
+              className="logout" 
+              onClick={this.logoutBtn}
+            >
+              Logout
+            </button>
+          </Sidebar>
           </div>
         </nav>
 

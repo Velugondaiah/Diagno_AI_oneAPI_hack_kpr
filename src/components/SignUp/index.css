@@ -1,8 +1,14 @@
-
 .main-bg-container-for-login{
     background-color: #DBEDF4;
     height: 100vh;
     padding: 15px;
+}
+.sign-up-heading{
+    margin-top: 0px;
+    padding-top: 0px;
+    font-size: 15px;
+    margin-top: 25px;
+    margin-right: 10px;
 }
 .login-container{
     display: flex;
@@ -12,6 +18,10 @@
     padding: 10px 0px 10px 0px;
     height: 100vh;
 
+}
+.button-container{
+    display: flex;
+    align-items: center;
 }
 .image{
     height: 130px;
@@ -100,3 +110,15 @@
         justify-content: center;
     }
 }
+
+/* Add these styles at the end of your CSS file */
+select.input-text {
+    padding-right: 15px;
+    cursor: pointer;
+    appearance: auto;
+}
+
+select.input-text option {
+    padding: 10px;
+}
+
