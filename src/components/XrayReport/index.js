@@ -19,7 +19,7 @@ const languages = [
     { id: "punjabi", language: "Punjabi / ਪੰਜਾਬੀ" }
 ];
 
-class AnalyseReport extends Component {
+class XrayReport extends Component {
     state = {
         languages: languages,
         selectedLanguage: "english",
@@ -64,7 +64,7 @@ class AnalyseReport extends Component {
         formData.append('language', selectedLanguage);
 
         try {
-            const response = await axios.post('http://localhost:3005/upload', formData, {
+            const response = await axios.post('http://localhost:3005/x-ray-reports', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
 
@@ -180,4 +180,4 @@ class AnalyseReport extends Component {
     }
 }
 
-export default AnalyseReport;
+export default XrayReport;

@@ -11,25 +11,24 @@ import { Sidebar, SidebarItem } from "./StyledComponent";
 class Header extends Component {
   state = { isSidebarOpen: false };
 
-  // Logout function
   logoutBtn = () => {
-    console.log("logout"); // Debug: Check if this is firing
     Cookies.remove("jwt_token");
     const { history } = this.props;
     history.replace("/login");
   };
 
-  // Toggle the sidebar open/close
   toggleSidebar = () => {
     this.setState(prevState => ({
       isSidebarOpen: !prevState.isSidebarOpen,
     }));
   };
 
-  // Close sidebar if clicking outside
   handleClickOutSide = event => {
     const { isSidebarOpen } = this.state;
-    if (isSidebarOpen && !event.target.closest('.Sidebar')) {
+    const sidebarElement = event.target.closest('.Sidebar');
+    const menuButton = event.target.closest('.menu-button');
+
+    if (isSidebarOpen && !sidebarElement && !menuButton) {
       this.setState({ isSidebarOpen: false });
     }
   };
@@ -49,7 +48,11 @@ class Header extends Component {
       <>
         {/* Small devices navigation */}
         <nav className="small-devices-nav-container">
-          <img alt="logo" className="logo" src="your_logo_url_here" />
+          <img 
+            alt="logo" 
+            className="logo" 
+            src="https://res.cloudinary.com/dbroxheos/image/upload/v1727450617/gdyevtkkyx2gplt3c0kv.png" 
+          />
           <div className="icons-container">
             <Link to="/" className="link">
               <AiFillHome className="icons" />
@@ -62,15 +65,19 @@ class Header extends Component {
             </Link>
           </div>
           <div>
-            <IoReorderThreeSharp size="39px" onClick={this.toggleSidebar} />
-            <Sidebar isOpen={isSidebarOpen}>
-              <Link to="/profile" className="link">
-                <SidebarItem>Profile</SidebarItem>
-              </Link>
-              <Link to="/booking-history" className="link">
-                <SidebarItem>Booking History</SidebarItem>
-              </Link>
-              <button type="button" className="logout" onClick={this.logoutBtn}>
+            <IoReorderThreeSharp 
+              size="39px" 
+              onClick={this.toggleSidebar} 
+              className="menu-button"
+            />
+            <Sidebar isOpen={isSidebarOpen} className="Sidebar">
+              <SidebarItem>Profile</SidebarItem>
+              <SidebarItem>Booking History</SidebarItem>
+              <button 
+                type="button" 
+                className="logout" 
+                onClick={this.logoutBtn}
+              >
                 Logout
               </button>
             </Sidebar>
@@ -79,7 +86,11 @@ class Header extends Component {
 
         {/* Large devices navigation */}
         <nav className="large-devices-container">
-          <img alt="logo" className="logo" src="your_logo_url_here" />
+          <img 
+            alt="logo" 
+            className="logo" 
+            src="https://res.cloudinary.com/dbroxheos/image/upload/v1727450617/gdyevtkkyx2gplt3c0kv.png" 
+          />
           <ul className="unorder-list">
             <Link to="/" className="link">
               <li>Home</li>
@@ -92,15 +103,23 @@ class Header extends Component {
             </Link>
           </ul>
           <div>
-            <IoReorderThreeSharp size="39px" onClick={this.toggleSidebar} />
+            <IoReorderThreeSharp 
+              size="39px" 
+              onClick={this.toggleSidebar} 
+              className="menu-button"
+            />
+            <Sidebar isOpen={isSidebarOpen} className="Sidebar">
+              <SidebarItem>Profile</SidebarItem>
+              <SidebarItem>Booking History</SidebarItem>
+              <button 
+                type="button" 
+                className="logout" 
+                onClick={this.logoutBtn}
+              >
+                Logout
+              </button>
+            </Sidebar>
           </div>
-          <Sidebar isOpen={isSidebarOpen}>
-            <SidebarItem>Profile</SidebarItem>
-            <SidebarItem>Booking History</SidebarItem>
-            <button type="button" className="logout" onClick={this.logoutBtn}>
-              Logout
-            </button>
-          </Sidebar>
         </nav>
       </>
     );

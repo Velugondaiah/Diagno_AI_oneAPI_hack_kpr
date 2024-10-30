@@ -3,6 +3,7 @@ import {Component} from "react"
 import Cookies from "js-cookie"
 import {Redirect } from "react-router-dom"
 import "./index.css"
+import {Link} from "react-router-dom"
 
 class LoginForm extends Component{
    state = {username : "" , password : ""}
@@ -75,6 +76,9 @@ class LoginForm extends Component{
                         </div>
                         <p className="forgot-password-heading">Forgot Password</p>
                         <button className="button" type="submit">Sign In</button>
+                        <Link to="/signup" className="link">
+                        <p className="sign-up-heading">Don't have an account? Sign Up</p>
+                        </Link>
                        </form>
                   </div>
             </div>

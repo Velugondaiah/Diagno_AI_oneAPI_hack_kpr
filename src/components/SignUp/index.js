@@ -1,6 +1,6 @@
 import { Component } from "react";
 import "./index.css"
-
+import {Link} from "react-router-dom"
 
 
 class SignUp extends Component{
@@ -166,6 +166,9 @@ class SignUp extends Component{
                          {this.birthDayFunc()}
                          {this.phoneNumberFunc()}
                         {this.passwordFunc()}
+                        <Link to="/login" className="link">
+                        <p className="sign-up-heading">Already have an account? Sign In</p>
+                        </Link>
                     <button className="button-otp" type="submit">Sign Up</button>
                    </form>
             </>

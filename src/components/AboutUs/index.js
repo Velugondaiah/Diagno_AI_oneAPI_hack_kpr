@@ -15,12 +15,12 @@ const AboutUs = () => {
                <h1 className="main-heading">Advanced Diagnostic Services</h1>
                 <p className="description">Leveraging AI to provide precise and reliable X-ray and Blood analyses...</p>
                 <div className="containers">
-                <Link className="link" to = "/reports">
+                <Link   className="link" to = "/x-ray-reports">
                 <button type = "button" className="advice-containers">
                     <h1 className="type-of-services-heading">Analyse X-ray</h1>
                 </button>
                 </Link>
-                <Link className = "link" to = "/reports">
+                <Link  className = "link" to = "/reports">
                 <button type = "button" className="advice-containers"> 
                     <h1 className="type-of-services-heading">Analyse Report</h1>
                 </button>
