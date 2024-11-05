@@ -18,6 +18,7 @@ import ReportAnalysis from './components/ReportAnalysis';
 
 
 
+
 const App = () => (
   <BrowserRouter>
     <Switch>
@@ -37,6 +38,8 @@ const App = () => (
       <ReportAnalysis />
     </Switch>
   </BrowserRouter>
+ 
+
 );
 
 export default App;

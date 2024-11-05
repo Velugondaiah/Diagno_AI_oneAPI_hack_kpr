@@ -1,187 +1,115 @@
-import { Component } from 'react';
+import React, { useState } from 'react';
 import './index.css';
 
-class FileUpload extends Component {
-  state = {
-    selectedFile: null,
-    selectedLanguage: 'english',
-    analysis: '',
-    isLoading: false,
-    error: null,
-    progress: ''
-  };
+const FileUpload = () => {
+    const [file, setFile] = useState(null);
+    const [language, setLanguage] = useState('english');
+    const [analysis, setAnalysis] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
 
-  handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      // Validate file type
-      const validTypes = ['application/pdf', 'image/jpeg', 'image/png'];
-      if (!validTypes.includes(file.type)) {
-        this.setState({ 
-          error: 'Please upload a PDF or image file (JPEG/PNG)',
-          selectedFile: null 
-        });
-        event.target.value = ''; // Reset file input
-        return;
-      }
+    const handleFileChange = (e) => {
+        setFile(e.target.files[0]);
+        setError('');
+    };
 
-      // Validate file size (max 10MB)
-      if (file.size > 10 * 1024 * 1024) {
-        this.setState({ 
-          error: 'File size should be less than 10MB',
-          selectedFile: null 
-        });
-        event.target.value = ''; // Reset file input
-        return;
-      }
+    const handleLanguageChange = (e) => {
+        setLanguage(e.target.value);
+    };
 
-      this.setState({ 
-        selectedFile: file,
-        error: null,
-        analysis: '',
-        progress: ''
-      });
-    }
-  };
+    const handleUpload = async (e) => {
+        e.preventDefault();
+        if (!file) {
+            setError('Please select a file');
+            return;
+        }
 
-  handleLanguageChange = (event) => {
-    this.setState({ selectedLanguage: event.target.value });
-  };
+        setLoading(true);
+        setError('');
 
-  updateProgress = (message) => {
-    this.setState({ progress: message });
-  };
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('language', language);
 
-  handleSubmit = async (event) => {
-    event.preventDefault();
-    const { selectedFile, selectedLanguage } = this.state;
+        try {
+            const response = await fetch('http://localhost:3008/upload', {
+                method: 'POST',
+                body: formData,
+            });
 
-    if (!selectedFile) {
-      this.setState({ error: 'Please select a file' });
-      return;
-    }
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Upload failed');
+            }
 
-    this.setState({ 
-      isLoading: true, 
-      error: null,
-      progress: 'Uploading file...'
-    });
+            const data = await response.json();
+            if (data.success) {
+                setAnalysis(data.result);
+            } else {
+                throw new Error(data.error || 'Analysis failed');
+            }
 
-    const formData = new FormData();
-    formData.append('file', selectedFile);
-    formData.append('language', selectedLanguage);
-
-    try {
-      this.updateProgress('Processing file...');
-      
-      const response = await fetch('http://localhost:3005/upload', {
-        method: 'POST',
-        body: formData,
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Upload failed');
-      }
-
-      if (!data.success) {
-        throw new Error(data.error || 'Processing failed');
-      }
-
-      this.setState({ 
-        analysis: data.formattedOutput,
-        isLoading: false,
-        progress: ''
-      });
-
-    } catch (error) {
-      console.error('Upload error:', error);
-      this.setState({ 
-        error: error.message || 'Error processing file. Please try again.',
-        isLoading: false,
-        progress: ''
-      });
-    }
-  };
-
-  render() {
-    const { 
-      selectedLanguage, 
-      analysis, 
-      isLoading, 
-      error, 
-      progress 
-    } = this.state;
+        } catch (error) {
+            console.error('Upload error:', error);
+            setError(error.message || 'Failed to analyze report');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
-      <div className="upload-container">
-        <h2>Upload Medical Report</h2>
-        <form onSubmit={this.handleSubmit} className="upload-form">
-          <div className="form-group">
-            <label htmlFor="file">Select File (PDF or Image):</label>
-            <input
-              type="file"
-              id="file"
-              accept=".pdf,.png,.jpg,.jpeg"
-              onChange={this.handleFileChange}
-              className="file-input"
-              disabled={isLoading}
-            />
-          </div>
+        <div className="upload-container">
+            <h2>Upload Medical Report</h2>
+            <form onSubmit={handleUpload} className="upload-form">
+                <div className="file-input-container">
+                    <input
+                        type="file"
+                        onChange={handleFileChange}
+                        accept=".pdf,.png,.jpg,.jpeg"
+                        className="file-input"
+                    />
+                </div>
 
-          <div className="form-group">
-            <label htmlFor="language">Select Language:</label>
-            <select
-              id="language"
-              value={selectedLanguage}
-              onChange={this.handleLanguageChange}
-              className="language-select"
-              disabled={isLoading}
-            >
-              <option value="english">English</option>
-              <option value="telugu">Telugu</option>
-              <option value="hindi">Hindi</option>
-              <option value="tamil">Tamil</option>
-              <option value="kannada">Kannada</option>
-              <option value="malayalam">Malayalam</option>
-              <option value="marathi">Marathi</option>
-              <option value="bengali">Bengali</option>
-              <option value="gujarati">Gujarati</option>
-              <option value="punjabi">Punjabi</option>
-            </select>
-          </div>
+                <div className="language-select-container">
+                    <label htmlFor="language">Select Language:</label>
+                    <select
+                        id="language"
+                        value={language}
+                        onChange={handleLanguageChange}
+                        className="language-select"
+                    >
+                        <option value="english">English</option>
+                        <option value="telugu">Telugu</option>
+                        <option value="hindi">Hindi</option>
+                        <option value="tamil">Tamil</option>
+                        <option value="kannada">Kannada</option>
+                        <option value="malayalam">Malayalam</option>
+                        <option value="marathi">Marathi</option>
+                        <option value="bengali">Bengali</option>
+                        <option value="gujarati">Gujarati</option>
+                        <option value="punjabi">Punjabi</option>
+                    </select>
+                </div>
 
-          <button 
-            type="submit" 
-            className="submit-button"
-            disabled={isLoading || !this.state.selectedFile}
-          >
-            {isLoading ? 'Processing...' : 'Analyze Report'}
-          </button>
-        </form>
+                <button 
+                    type="submit" 
+                    className="upload-button"
+                    disabled={loading}
+                >
+                    {loading ? 'Analyzing...' : 'Analyze Report'}
+                </button>
 
-        {progress && (
-          <div className="progress-message">
-            {progress}
-          </div>
-        )}
+                {error && <div className="error-message">{error}</div>}
 
-        {error && (
-          <div className="error-message">
-            {error}
-          </div>
-        )}
-
-        {analysis && (
-          <div className="analysis-result">
-            <h3>Analysis Result:</h3>
-            <pre>{analysis}</pre>
-          </div>
-        )}
-      </div>
+                {analysis && (
+                    <div className="analysis-result">
+                        <h3>Analysis Result:</h3>
+                        <pre>{analysis}</pre>
+                    </div>
+                )}
+            </form>
+        </div>
     );
-  }
-}
+};
 
 export default FileUpload; 

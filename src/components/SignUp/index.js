@@ -79,14 +79,17 @@ class SignUp extends Component {
         }
 
         try {
-            const response = await fetch("http://localhost:3005/signup", {
+            const response = await fetch("http://localhost:3008/signup", {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",
+                    "Accept": "application/json"
                 },
                 body: JSON.stringify(detailsOfUser),
             })
+            console.log('Signup Response:', response);
             const data = await response.json()
+            console.log('Signup Data:', data);
             
             if (response.ok) {
                 this.onSubmitSuccess(data)
@@ -100,7 +103,7 @@ class SignUp extends Component {
             console.error('Signup error:', error)
             this.setState({
                 showError: true,
-                errorMsg: 'user already exists'
+                errorMsg: 'Connection error. Please try again.'
             })
         }
     }

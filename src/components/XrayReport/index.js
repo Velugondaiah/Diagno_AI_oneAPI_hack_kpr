@@ -27,13 +27,23 @@ class XrayReport extends Component {
         result: null,
         error: null,
         loading: false, // New state for loading
+        fileType: 'xray', // Add this to explicitly set file type
     };
 
     // Handle file selection
     handleFileChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            this.setState({ file });
+            const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+            if (!validTypes.includes(file.type)) {
+                this.setState({ 
+                    error: "Please upload a valid X-ray image (JPEG, PNG formats only)",
+                    file: null 
+                });
+                e.target.value = ''; // Reset file input
+                return;
+            }
+            this.setState({ file, error: null });
         } else {
             this.setState({ error: "Please select a file." });
         }
@@ -49,35 +59,38 @@ class XrayReport extends Component {
         e.preventDefault();
         const { file, selectedLanguage } = this.state;
 
-        // Validate file input
         if (!file) {
             this.setState({ error: "Please upload a file." });
             return;
         }
 
-        // Reset error and start loading
         this.setState({ error: null, loading: true });
 
-        // Prepare the form data for the request
         const formData = new FormData();
         formData.append('file', file);
         formData.append('language', selectedLanguage);
+        formData.append('fileType', 'xray');
 
         try {
-            const response = await axios.post('http://localhost:3005/x-ray-reports', formData, {
+            const response = await axios.post('http://localhost:3008/upload', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
 
-            // Process the response
             if (response.status === 200) {
                 this.setState({ result: response.data.formattedOutput, error: null, loading: false });
             } else {
-                this.setState({ error: 'Error processing your request. Please try again.', loading: false });
+                this.setState({ 
+                    error: `Server responded with status: ${response.status}`, 
+                    loading: false 
+                });
             }
 
         } catch (error) {
-            console.error('Error uploading file:', error);
-            this.setState({ error: 'Error processing your request. Please try again.', loading: false });
+            console.error('Detailed error:', error.response?.data || error);
+            this.setState({ 
+                error: error.response?.data?.details || error.message || 'Error processing your request',
+                loading: false 
+            });
         }
     };
 
@@ -100,7 +113,7 @@ class XrayReport extends Component {
                                         id="file-upload"
                                         className="file"
                                         type="file"
-                                        accept=".pdf,.doc,.docx,.txt" // Add file type validation
+                                        accept="image/jpeg,image/png,image/jpg" // Remove PDF, only allow images
                                         onChange={this.handleFileChange}
                                     />
                                 </div>
@@ -147,7 +160,7 @@ class XrayReport extends Component {
                     {/* Display the result */}
                     {result && (
                         <div className="result-container">
-                            <h2 className="result-heading">Results:</h2>
+                            <h2 className="result-heading">X-Ray Analysis Report:</h2>
                             {result.split('\n\n').map((section, index) => {
                                 if (section.trim()) {
                                     const [title, ...content] = section.split('\n');
@@ -157,7 +170,11 @@ class XrayReport extends Component {
                                                 <h3 className="question">{title}</h3>
                                                 <div className="answer">
                                                     {content.map((line, lineIndex) => (
-                                                        <p key={lineIndex}>{line.replace(/^-\s*/, '• ')}</p>
+                                                        <p key={lineIndex}>
+                                                            {line.startsWith('-') ? 
+                                                                line.replace(/^-\s*/, '• ') : 
+                                                                line}
+                                                        </p>
                                                     ))}
                                                 </div>
                                             </div>
@@ -166,6 +183,11 @@ class XrayReport extends Component {
                                 }
                                 return null;
                             })}
+                            <div className="disclaimer">
+                                <p className="disclaimer-text">
+                                    DISCLAIMER: This is an AI-generated analysis. Please consult with qualified medical professionals for accurate diagnosis and treatment.
+                                </p>
+                            </div>
                         </div>
                     )}
 

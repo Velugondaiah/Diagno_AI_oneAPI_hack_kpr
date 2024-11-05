@@ -50,7 +50,7 @@ class ReportAnalysis extends Component {
     formData.append('language', selectedLanguage);
 
     try {
-      const response = await fetch('http://localhost:3005/analyze-report', {
+      const response = await fetch('http://localhost:3008/analyze-report', {
         method: 'POST',
         body: formData,
       });

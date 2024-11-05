@@ -208,3 +208,47 @@
     color:#000000;
     font-size: 25px;
   }
+
+.medical-disclaimer {
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    color: #856404;
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 900px;
+}
+
+.disclaimer-text {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Update result sections for fracture-specific styling */
+.qa-box.fracture-positive {
+    border-left-color: #dc3545;
+}
+
+.qa-box.fracture-negative {
+    border-left-color: #28a745;
+}
+
+.fracture-status {
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.fracture-positive .fracture-status {
+    background-color: #dc3545;
+    color: white;
+}
+
+.fracture-negative .fracture-status {
+    background-color: #28a745;
+    color: white;
+}

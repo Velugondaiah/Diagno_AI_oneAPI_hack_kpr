@@ -3,47 +3,47 @@ import Doctors from "../Doctors"
 import Header from "../Header"
 import "./index.css"
 class DoctorsList extends Component{
-    state = {listOfDoctors : []}
+
     
+    // onSuccess = (data) => {
+    //     const updateData = data.map(valu => ({
+    //         appointmentCost : valu.appointment_cost,
+    //         id : valu.id,
+    //         imageUrl : valu.image_url,
+    //         location : valu.location,
+    //         locationUrl : valu.location_url,
+    //         name : valu.name ,
+    //         phoneNumber : valu.phone_number,
+    //         rating : valu.rating,
+    //         specialization : valu.specialization
 
-    onSuccess = (data) => {
-        const updateData = data.map(valu => ({
-            appointmentCost : valu.appointment_cost,
-            id : valu.id,
-            imageUrl : valu.image_url,
-            location : valu.location,
-            locationUrl : valu.location_url,
-            name : valu.name ,
-            phoneNumber : valu.phone_number,
-            rating : valu.rating,
-            specialization : valu.specialization
-
-        }))
-        console.log(updateData)
-        this.setState({listOfDoctors : updateData})
-    }
+    //     }))
+    //     console.log(updateData)
+    //     this.setState({listOfDoctors : updateData})
+    // }
 
     
     componentDidMount(){
-        this.onSuccessfullDoctorsList()
+        // this.onSuccessfullDoctorsList()
     } 
    
     
 
-    onSuccessfullDoctorsList = async () => {
-        const url = "https://diagonalasisdb-1.onrender.com/doctors"
-        const response = await fetch(url)
-        if (response.ok === true){
-            const data = await response.json()
+    // onSuccessfullDoctorsList = async () => {
+    //     const url = "https://diagonalasisdb-1.onrender.com/doctors"
+    //     const response = await fetch(url)
+    //     if (response.ok === true){
+    //         const data = await response.json()
             
-            this.onSuccess(data)
-        }else{
+    //         this.onSuccess(data)
+    //     }else{
            
-        }
-    }
+    //     }
+    // }
     render(){
-        const {listOfDoctors} = this.state
-        console.log(listOfDoctors)
+        const {listOfDoctors} = this.props.listOfDoctors
+        console.log("ssssss")
+        console.log("result: ",listOfDoctors  )
         return(
           <>
           <Header/>

@@ -31,31 +31,35 @@ class LoginForm extends Component {
     event.preventDefault()
     const {username, password} = this.state
     const userDetails = {username, password}
-    const url = 'http://localhost:3005/login'
+    const url = 'http://localhost:3008/login'
                 
     try {
       const response = await fetch(url, {
         method: 'POST',
         headers: {
-          "Content-Type": "application/json", 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
         },
         body: JSON.stringify(userDetails),
       })
+      
+      console.log('Login Response:', response);
       const data = await response.json()
+      console.log('Login Data:', data);
       
       if (response.ok) {
         this.onSubmitSuccess(data)
       } else {
         this.setState({
           showError: true,
-          errorMsg: data.error || 'Something went wrong'
+          errorMsg: data.error || 'Invalid credentials'
         })
       }
     } catch (error) {
       console.error('Login error:', error)
       this.setState({
         showError: true,
-        errorMsg: 'Invalid username or password'
+        errorMsg: 'Connection error. Please try again.'
       })
     }
   }

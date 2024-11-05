@@ -26,7 +26,7 @@ class UploadForm extends Component {
     formData.append('language', this.state.language);
 
     try {
-      const res = await axios.post('http://localhost:3005/upload', formData, {
+      const res = await axios.post('http://localhost:3008/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       this.setState({ response: res.data.translatedOutput });

@@ -41,4 +41,17 @@
     font-weight: 500;
     width: 200px;
   }
+  .specialist-tag {
+    background: #3498db;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    margin-left: 10px;
+  }
+  .title-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
   
