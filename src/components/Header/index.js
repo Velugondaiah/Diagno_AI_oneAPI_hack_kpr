@@ -41,8 +41,22 @@ class Header extends Component {
     document.removeEventListener('mousedown', this.handleClickOutSide);
   }
 
+  handleProfileClick = () => {
+    const { history } = this.props;
+    console.log('Profile clicked');
+    history.push('/profile');
+    this.setState({ isSidebarOpen: false });
+  };
+
+  handleBookingHistoryClick = () => {
+    const { history } = this.props;
+    history.push('/booking-history');
+    this.setState({ isSidebarOpen: false });
+  };
+
   render() {
     const { isSidebarOpen } = this.state;
+    const { history } = this.props;
 
     return (
       <>
@@ -70,19 +84,21 @@ class Header extends Component {
               onClick={this.toggleSidebar} 
               className="menu-button"
             />
-                    <Sidebar isOpen={isSidebarOpen} className="Sidebar">
-            <Link to="/profile" className="link">
-              <SidebarItem>Profile</SidebarItem>
-            </Link>
-            <SidebarItem>Booking History</SidebarItem>
-            <button 
-              type="button" 
-              className="logout" 
-              onClick={this.logoutBtn}
-            >
-              Logout
-            </button>
-          </Sidebar>
+            <Sidebar isOpen={isSidebarOpen} className="Sidebar">
+              <SidebarItem onClick={this.handleProfileClick}>
+                Profile
+              </SidebarItem>
+              <SidebarItem onClick={this.handleBookingHistoryClick}>
+                Booking History
+              </SidebarItem>
+              <button 
+                type="button" 
+                className="logout" 
+                onClick={this.logoutBtn}
+              >
+                Logout
+              </button>
+            </Sidebar>
           </div>
         </nav>
 
@@ -111,8 +127,12 @@ class Header extends Component {
               className="menu-button"
             />
             <Sidebar isOpen={isSidebarOpen} className="Sidebar">
-              <SidebarItem>Profile</SidebarItem>
-              <SidebarItem>Booking History</SidebarItem>
+              <SidebarItem onClick={this.handleProfileClick}>
+                Profile
+              </SidebarItem>
+              <SidebarItem onClick={this.handleBookingHistoryClick}>
+                Booking History
+              </SidebarItem>
               <button 
                 type="button" 
                 className="logout" 
