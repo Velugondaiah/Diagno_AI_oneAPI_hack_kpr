@@ -268,12 +268,7 @@ class Appointments extends Component {
             doctor => doctor.id === doctorId
         );
 
-        // Format doctor name correctly - remove 'Dr.' if it already exists in the name
-        const formattedName = selectedDoctor.name.startsWith('Dr.') 
-            ? selectedDoctor.name 
-            : `Dr. ${selectedDoctor.name}`;
-
-        // Get user_id from localStorage or your auth state management
+        // Get user data
         const userData = JSON.parse(localStorage.getItem('userData'));
         if (!userData || !userData.id) {
             alert('Please login to book an appointment');
@@ -281,16 +276,19 @@ class Appointments extends Component {
             return;
         }
 
-        // Check availability
+        // First check availability
         const availabilityResponse = await axios.get(
-            `http://localhost:3008/api/appointments/check-availability`, {
-            params: {
-                doctor_id: doctorId,
-                date: this.state.date,
-                time: this.state.time
+            `http://localhost:3008/api/appointments/check-availability`,
+            {
+                params: {
+                    doctor_id: doctorId,
+                    date: this.state.date,
+                    time: this.state.time
+                }
             }
-        });
+        );
 
+        // If slot is not available, show message and return
         if (!availabilityResponse.data.available) {
             alert('This time slot is already booked. Please select a different time.');
             return;
@@ -299,7 +297,7 @@ class Appointments extends Component {
         // If available, proceed with booking
         const appointmentData = {
             doctor_id: doctorId,
-            user_id: userData.id,  // Add user_id to the appointment data
+            user_id: userData.id,
             patient_name: this.state.patientName,
             gender: this.state.gender,
             age: parseInt(this.state.age),
@@ -311,33 +309,40 @@ class Appointments extends Component {
             location: this.state.selectedLocation
         };
 
-        const response = await axios.post('http://localhost:3008/api/appointments', appointmentData);
-        
-        // Debug log
-        console.log('Server response:', response);
+        const response = await axios.post(
+            'http://localhost:3008/api/appointments',
+            appointmentData
+        );
 
-        if (response.status === 201 || response.status === 200) {
-            this.setState(prevState => ({
-                appointmentsList: [...prevState.appointmentsList, {
-                    id: response.data.id,
-                    ...appointmentData,
-                    doctorName: selectedDoctor.name,
-                    isFavourite: false,
-                }],
+        if (response.status === 201) {
+            // Format doctor name
+            const formattedName = selectedDoctor.name.startsWith('Dr.') 
+                ? selectedDoctor.name 
+                : `Dr. ${selectedDoctor.name}`;
+
+            // Clear form fields
+            this.setState({
                 patientName: '',
                 gender: '',
                 age: '',
                 phoneNumber: '',
                 address: '',
                 date: '',
-            }), () => {
-                alert(`Appointment booked successfully with ${formattedName}`);
-                this.props.history.push('/services');
+                time: '',
+                selectedLocation: '',
             });
+
+            // Show success message and redirect
+            alert(`Appointment booked successfully with ${formattedName}`);
+            this.props.history.push('/services');
         }
     } catch (error) {
         console.error('Error booking appointment:', error);
-        alert('Failed to book appointment. Please try again.');
+        if (error.response?.data?.message) {
+            alert(error.response.data.message);
+        } else {
+            alert('Failed to book appointment. Please try again.');
+        }
     }
 };
 
