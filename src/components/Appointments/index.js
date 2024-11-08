@@ -193,17 +193,14 @@ class Appointments extends Component {
 
   handleProceed = async () => {
     if (!this.validateForm()) {
-      alert('Please fill in all fields before proceeding');
-      return;
+        alert('Please fill in all fields before proceeding');
+        return;
     }
 
     const { selectedLocation, specialist } = this.state;
     
-    // Debug logs
-    console.log('Making request with:', { selectedLocation, specialist });
-    
-    if (!selectedLocation) {
-        alert('Please select a location');
+    if (!selectedLocation || !specialist) {
+        alert('Please select both location and specialist');
         return;
     }
 
@@ -213,48 +210,46 @@ class Appointments extends Component {
         doctorResults: [],
         noDoctorsFound: false 
     });
-      console.log("velugu")
+
     try {
-        // Make sure this URL matches your backend exactly
-        const url = `http://localhost:3008/api/doctor-locations/getDoctors?location=${encodeURIComponent(selectedLocation)}&specialization=${encodeURIComponent(specialist)}`;
-        console.log('Fetching from URL:', url);
+        const response = await axios.get(
+            'http://localhost:3008/api/doctor-locations/getDoctors',
+            {
+                params: {
+                    location: selectedLocation,
+                    specialization: specialist
+                }
+            }
+        );
 
-        const response = await fetch(url);
-        console.log(response)
-        if (response.ok) {
-          const data = await response.json();
-          this.onSuccess(data);
+        if (response.data && Array.isArray(response.data)) {
+            const formattedDoctors = response.data.map(doctor => ({
+                id: doctor.id,
+                name: doctor.name,
+                specialization: doctor.specialization,
+                appointmentCost: doctor.appointment_cost,
+                location: doctor.location,
+                rating: doctor.rating,
+                phoneNumber: doctor.phone_number,
+                imageUrl: doctor.image_url,
+                locationUrl: doctor.location_url
+            }));
+
+            this.setState({
+                doctorResults: formattedDoctors,
+                noDoctorsFound: formattedDoctors.length === 0
+            });
         } else {
-          this.setState({ error: 'Failed to fetch doctors' , noDoctorsFound: true});
+            this.setState({
+                noDoctorsFound: true,
+                error: 'Invalid response format from server'
+            });
         }
-        // Check if response is ok
-        // if (!response.ok) {
-        //     throw new Error(`HTTP error! status: ${response.status}`);
-        // }
-        
-        // const contentType = response.headers.get("content-type");
-        // if (!contentType || !contentType.includes("application/json")) {
-        //     throw new Error("Received non-JSON response from server");
-        // }
-
-        // const data = await response.json();
-        // console.log('Response data:', data);
-
-        // if (data.success && data.doctors.length > 0) {
-          
-        //     this.setState({
-        //         doctorResults: data.doctors,
-        //         noDoctorsFound: false
-        //     });
-        // } else {
-        //     this.setState({
-        //         noDoctorsFound: true
-        //     });
-        // }
     } catch (error) {
-        console.error('Detailed error:', error);
+        console.error('Error fetching doctors:', error);
         this.setState({
-            error: `Failed to fetch doctor details. Please make sure the server is running.`
+            error: 'Failed to fetch doctors. Please try again.',
+            noDoctorsFound: true
         });
     } finally {
         this.setState({ isLoading: false });
@@ -263,41 +258,53 @@ class Appointments extends Component {
 
   handleDoctorSelect = async (doctorId) => {
     try {
-        // Find the selected doctor from doctorResults
-        const selectedDoctor = this.state.doctorResults.find(
-            doctor => doctor.id === doctorId
-        );
+        // Debug: Log the doctorId
+        console.log('Selected Doctor ID:', doctorId);
 
-        // Get user data
-        const userData = JSON.parse(localStorage.getItem('userData'));
-        if (!userData || !userData.id) {
+        // Check localStorage for user data
+        const userDataString = localStorage.getItem('userData');
+        console.log('Raw userData from localStorage:', userDataString);
+
+        if (!userDataString) {
+            console.log('No user data found in localStorage');
             alert('Please login to book an appointment');
             this.props.history.push('/login');
             return;
         }
 
-        // First check availability
-        const availabilityResponse = await axios.get(
-            `http://localhost:3008/api/appointments/check-availability`,
-            {
-                params: {
-                    doctor_id: doctorId,
-                    date: this.state.date,
-                    time: this.state.time
-                }
-            }
-        );
-
-        // If slot is not available, show message and return
-        if (!availabilityResponse.data.available) {
-            alert('This time slot is already booked. Please select a different time.');
+        let userData;
+        try {
+            userData = JSON.parse(userDataString);
+            console.log('Parsed User Data:', {
+                id: userData.id,
+                username: userData.username,
+                email: userData.email
+            });
+        } catch (error) {
+            console.error('Error parsing user data:', error);
+            localStorage.removeItem('userData');
+            alert('Session expired. Please login again.');
+            this.props.history.push('/login');
             return;
         }
 
-        // If available, proceed with booking
+        // Log current state
+        console.log('Current Form State:', {
+            patientName: this.state.patientName,
+            gender: this.state.gender,
+            age: this.state.age,
+            date: this.state.date,
+            time: this.state.time,
+            phoneNumber: this.state.phoneNumber,
+            address: this.state.address,
+            specialist: this.state.specialist,
+            selectedLocation: this.state.selectedLocation
+        });
+
+        // Create appointment data
         const appointmentData = {
-            doctor_id: doctorId,
-            user_id: userData.id,
+            doctor_id: parseInt(doctorId),
+            user_id: parseInt(userData.id),
             patient_name: this.state.patientName,
             gender: this.state.gender,
             age: parseInt(this.state.age),
@@ -309,18 +316,22 @@ class Appointments extends Component {
             location: this.state.selectedLocation
         };
 
+        console.log('Appointment Data to be sent:', appointmentData);
+
+        // Make the API call
         const response = await axios.post(
             'http://localhost:3008/api/appointments',
-            appointmentData
+            appointmentData,
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
         );
 
-        if (response.status === 201) {
-            // Format doctor name
-            const formattedName = selectedDoctor.name.startsWith('Dr.') 
-                ? selectedDoctor.name 
-                : `Dr. ${selectedDoctor.name}`;
+        console.log('API Response:', response);
 
-            // Clear form fields
+        if (response.status === 201) {
             this.setState({
                 patientName: '',
                 gender: '',
@@ -329,25 +340,35 @@ class Appointments extends Component {
                 address: '',
                 date: '',
                 time: '',
-                selectedLocation: '',
+                selectedLocation: ''
             });
 
-            // Show success message and redirect
-            alert(`Appointment booked successfully with ${formattedName}`);
+            alert('Appointment booked successfully!');
             this.props.history.push('/services');
         }
     } catch (error) {
-        console.error('Error booking appointment:', error);
-        if (error.response?.data?.message) {
-            alert(error.response.data.message);
-        } else {
-            alert('Failed to book appointment. Please try again.');
-        }
+        console.error('Detailed booking error:', {
+            message: error.message
+        });
+
+        alert(`Booking failed: ${error.message}`);
     }
 };
 
   renderDoctorResults = () => {
-    const { doctorResults } = this.state;
+    const { doctorResults, noDoctorsFound, isLoading, error } = this.state;
+
+    if (isLoading) {
+        return <div className="loading">Loading doctors...</div>;
+    }
+
+    if (error) {
+        return <div className="error-message">{error}</div>;
+    }
+
+    if (noDoctorsFound) {
+        return <div className="no-results">No doctors found for the selected criteria</div>;
+    }
 
     return (
         <div className="doctors-grid">

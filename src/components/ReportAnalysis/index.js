@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import './index.css';
 
 class ReportAnalysis extends Component {
@@ -7,7 +8,8 @@ class ReportAnalysis extends Component {
     selectedLanguage: 'english',
     analysis: '',
     isLoading: false,
-    error: null
+    error: null,
+    recommendedSpecialist: null
   };
 
   handleFileChange = (event) => {
@@ -34,6 +36,13 @@ class ReportAnalysis extends Component {
     this.setState({ selectedLanguage: event.target.value });
   };
 
+  handleBookAppointment = (specialist) => {
+    this.props.history.push({
+      pathname: '/appointments',
+      search: `?specialist=${encodeURIComponent(specialist)}`
+    });
+  };
+
   handleSubmit = async (event) => {
     event.preventDefault();
     const { selectedFile, selectedLanguage } = this.state;
@@ -57,50 +66,50 @@ class ReportAnalysis extends Component {
 
       const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(data.error || 'Analysis failed');
-      }
+      if (response.ok) {
+        // Extract specialist from the analysis
+        const specialistMatch = data.analysis.match(/Recommended Specialist:\s*([^\n]+)/);
+        const specialist = specialistMatch ? specialistMatch[1].trim() : null;
 
-      this.setState({ 
-        analysis: data.formattedOutput,
-        isLoading: false 
-      });
+        this.setState({
+          analysis: data.analysis,
+          recommendedSpecialist: specialist,
+          isLoading: false
+        });
+      } else {
+        throw new Error(data.error || 'Failed to analyze report');
+      }
     } catch (error) {
-      console.error('Analysis error:', error);
-      this.setState({ 
-        error: error.message || 'Error analyzing report',
-        isLoading: false 
+      this.setState({
+        error: error.message || 'Failed to analyze report',
+        isLoading: false
       });
     }
   };
 
   render() {
-    const { selectedLanguage, analysis, isLoading, error } = this.state;
+    const { selectedLanguage, analysis, isLoading, error, recommendedSpecialist } = this.state;
 
     return (
-      <div className="analysis-container">
-        <h2>Medical Report Analysis</h2>
+      <div className="report-analysis-container">
+        <h1>Medical Report Analysis</h1>
         <form onSubmit={this.handleSubmit} className="analysis-form">
-          <div className="form-group">
-            <label htmlFor="file">Upload Medical Report (PDF/Image):</label>
+          <div className="file-input-container">
+            <label htmlFor="report-file">Upload Medical Report</label>
             <input
               type="file"
-              id="file"
-              accept=".pdf,.png,.jpg,.jpeg"
+              id="report-file"
+              accept=".pdf,.jpg,.jpeg,.png"
               onChange={this.handleFileChange}
-              className="file-input"
-              disabled={isLoading}
             />
           </div>
 
-          <div className="form-group">
+          <div className="language-select-container">
             <label htmlFor="language">Select Language:</label>
             <select
               id="language"
               value={selectedLanguage}
               onChange={this.handleLanguageChange}
-              className="language-select"
-              disabled={isLoading}
             >
               <option value="english">English</option>
               <option value="telugu">Telugu</option>
@@ -134,6 +143,18 @@ class ReportAnalysis extends Component {
           <div className="analysis-result">
             <h3>Analysis Result:</h3>
             <pre>{analysis}</pre>
+            
+            {recommendedSpecialist && (
+              <div className="specialist-recommendation">
+                <h3>Recommended Specialist: {recommendedSpecialist}</h3>
+                <button 
+                  onClick={() => this.handleBookAppointment(recommendedSpecialist)}
+                  className="book-appointment-btn"
+                >
+                  Book Appointment with {recommendedSpecialist}
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -141,4 +162,4 @@ class ReportAnalysis extends Component {
   }
 }
 
-export default ReportAnalysis; 
+export default withRouter(ReportAnalysis); 

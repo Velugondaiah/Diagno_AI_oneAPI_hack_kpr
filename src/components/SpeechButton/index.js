@@ -2,92 +2,86 @@ import React, { useState } from 'react';
 import { FaPlay, FaPause, FaStop } from 'react-icons/fa';
 import './index.css';
 
-const languageMap = {
-    'english': 'en-US',
-    'telugu': 'te-IN',
-    'hindi': 'hi-IN',
-    'tamil': 'ta-IN',
-    'kannada': 'kn-IN',
-    'malayalam': 'ml-IN',
-    'marathi': 'mr-IN',
-    'bengali': 'bn-IN',
-    'gujarati': 'gu-IN',
-    'punjabi': 'pa-IN'
-};
-
-const SpeechButton = ({ text, label, language = 'english' }) => {
+const SpeechButton = ({ text, label, language }) => {
     const [isPlaying, setIsPlaying] = useState(false);
-    const [speechInstance, setSpeechInstance] = useState(null);
+    const [utterance, setUtterance] = useState(null);
 
-    const stopSpeech = () => {
-        if (speechInstance) {
-            window.speechSynthesis.cancel();
-            setSpeechInstance(null);
-            setIsPlaying(false);
-        }
+    const languageMap = {
+        english: 'en-US',
+        hindi: 'hi-IN',
+        telugu: 'te-IN',
+        tamil: 'ta-IN',
+        kannada: 'kn-IN',
+        malayalam: 'ml-IN',
+        marathi: 'mr-IN',
+        bengali: 'bn-IN',
+        gujarati: 'gu-IN',
+        punjabi: 'pa-IN'
     };
 
-    const toggleSpeech = () => {
-        if (isPlaying) {
-            stopSpeech();
-            return;
-        }
-
-        // Stop any existing speech
+    const speak = () => {
+        if (!text) return;
         window.speechSynthesis.cancel();
-
-        const utterance = new SpeechSynthesisUtterance(text);
         
-        // Set language based on the prop
-        utterance.lang = languageMap[language] || 'en-US';
+        const newUtterance = new SpeechSynthesisUtterance(text);
+        newUtterance.lang = languageMap[language] || 'en-US';
+        newUtterance.rate = 0.9;
         
-        // Get available voices
-        const voices = window.speechSynthesis.getVoices();
-        
-        // Try to find a voice for the selected language
-        const voice = voices.find(v => v.lang.startsWith(languageMap[language]));
-        if (voice) {
-            utterance.voice = voice;
-        }
-
-        utterance.onend = () => {
+        newUtterance.onend = () => {
             setIsPlaying(false);
-            setSpeechInstance(null);
+            setUtterance(null);
         };
 
-        utterance.onerror = (event) => {
+        newUtterance.onerror = (event) => {
             console.error('Speech synthesis error:', event);
             setIsPlaying(false);
-            setSpeechInstance(null);
+            setUtterance(null);
         };
 
-        window.speechSynthesis.speak(utterance);
-        setSpeechInstance(utterance);
+        setUtterance(newUtterance);
+        setIsPlaying(true);
+        window.speechSynthesis.speak(newUtterance);
+    };
+
+    const pause = () => {
+        window.speechSynthesis.pause();
+        setIsPlaying(false);
+    };
+
+    const resume = () => {
+        window.speechSynthesis.resume();
         setIsPlaying(true);
     };
 
-    const checkVoiceAvailability = (lang) => {
-        const voices = window.speechSynthesis.getVoices();
-        return voices.some(voice => voice.lang.startsWith(languageMap[lang]));
+    const stop = () => {
+        window.speechSynthesis.cancel();
+        setIsPlaying(false);
+        setUtterance(null);
     };
 
     return (
-        <>
-            {!checkVoiceAvailability(language) && (
-                <div className="voice-warning">
-                    Voice not available for {language}
-                </div>
+        <div className="speech-controls">
+            {!utterance ? (
+                <button onClick={speak} className="speech-btn">
+                    <FaPlay /> Listen
+                </button>
+            ) : (
+                <>
+                    {isPlaying ? (
+                        <button onClick={pause} className="speech-btn">
+                            <FaPause />
+                        </button>
+                    ) : (
+                        <button onClick={resume} className="speech-btn">
+                            <FaPlay />
+                        </button>
+                    )}
+                    <button onClick={stop} className="speech-btn">
+                        <FaStop />
+                    </button>
+                </>
             )}
-            <button 
-                className={`speech-button ${isPlaying ? 'playing' : ''}`}
-                onClick={toggleSpeech}
-                title={`Read ${label || 'text'} aloud`}
-                disabled={!checkVoiceAvailability(language)}
-            >
-                {isPlaying ? <FaPause /> : <FaPlay />}
-                <span className="speech-label">{label || 'Read Aloud'}</span>
-            </button>
-        </>
+        </div>
     );
 };
 

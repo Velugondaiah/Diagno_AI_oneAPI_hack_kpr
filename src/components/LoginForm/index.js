@@ -13,18 +13,40 @@ class LoginForm extends Component {
   }
 
   onSubmitSuccess = (data) => {
-    const {history} = this.props
+    console.log('Login Response:', data); // Log the entire response
 
-    // Save token to cookies
-    Cookies.set('jwt_token', data.jwt_token, {
-      expires: 30,
-      path: '/',
-    })
+    try {
+      // Save token to cookies
+      Cookies.set('jwt_token', data.jwt_token, {
+        expires: 30,
+        path: '/',
+      })
 
-    // Save user data to localStorage
-    localStorage.setItem('userData', JSON.stringify(data.user))
-    
-    history.replace('/')
+      // Validate user data
+      if (!data.user || !data.user.id) {
+        console.error('Invalid user data in login response:', data);
+        throw new Error('Invalid user data received');
+      }
+
+      // Create user data object
+      const userData = {
+        id: data.user.id,
+        username: data.user.username,
+        email: data.user.email
+      };
+
+      console.log('Storing user data in localStorage:', userData);
+      localStorage.setItem('userData', JSON.stringify(userData));
+
+      const { history } = this.props;
+      history.replace('/');
+    } catch (error) {
+      console.error('Error in onSubmitSuccess:', error);
+      this.setState({
+        showError: true,
+        errorMsg: 'Error processing login response'
+      });
+    }
   }
 
   submitForm = async event => {
@@ -43,11 +65,15 @@ class LoginForm extends Component {
         body: JSON.stringify(userDetails),
       })
       
-      console.log('Login Response:', response);
+      console.log('Login Response Status:', response.status);
       const data = await response.json()
-      console.log('Login Data:', data);
+      console.log('Login Response Data:', data);
       
       if (response.ok) {
+        // Validate the response data
+        if (!data.jwt_token || !data.user || !data.user.id) {
+          throw new Error('Invalid response format from server');
+        }
         this.onSubmitSuccess(data)
       } else {
         this.setState({
@@ -59,7 +85,7 @@ class LoginForm extends Component {
       console.error('Login error:', error)
       this.setState({
         showError: true,
-        errorMsg: 'Connection error. Please try again.'
+        errorMsg: error.message || 'Connection error. Please try again.'
       })
     }
   }

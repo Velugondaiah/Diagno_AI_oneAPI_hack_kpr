@@ -37,7 +37,7 @@ const App = () => (
       <Route exact path="/appointments" component={Appointments} />
       <Route exact path="/not-found" component={NotFound} />
       <FileUpload />
-      {/* <ReportAnalysis /> */}
+      
       
     </Switch>
   </Router>
