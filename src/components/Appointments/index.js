@@ -301,6 +301,23 @@ class Appointments extends Component {
             selectedLocation: this.state.selectedLocation
         });
 
+        // Check availability before booking
+        const availabilityResponse = await axios.get(
+            'http://localhost:3008/api/appointments/check-availability',
+            {
+                params: {
+                    doctor_id: doctorId,
+                    date: this.state.date,
+                    time: this.state.time
+                }
+            }
+        );
+
+        if (!availabilityResponse.data.available) {
+            alert('This time slot is already booked. Please select a different time.');
+            return;
+        }
+
         // Create appointment data
         const appointmentData = {
             doctor_id: parseInt(doctorId),
@@ -316,9 +333,6 @@ class Appointments extends Component {
             location: this.state.selectedLocation
         };
 
-        console.log('Appointment Data to be sent:', appointmentData);
-
-        // Make the API call
         const response = await axios.post(
             'http://localhost:3008/api/appointments',
             appointmentData,
@@ -328,8 +342,6 @@ class Appointments extends Component {
                 }
             }
         );
-
-        console.log('API Response:', response);
 
         if (response.status === 201) {
             this.setState({
@@ -347,11 +359,12 @@ class Appointments extends Component {
             this.props.history.push('/services');
         }
     } catch (error) {
-        console.error('Detailed booking error:', {
-            message: error.message
-        });
-
-        alert(`Booking failed: ${error.message}`);
+        if (error.response?.status === 409) {
+            alert('This time slot was just booked by another user. Please select a different time.');
+        } else {
+            console.error('Booking error:', error);
+            alert(`Booking failed: ${error.response?.data?.message || error.message}`);
+        }
     }
 };
 
@@ -386,7 +399,7 @@ class Appointments extends Component {
                             />
                         </div>
                         <div className="doctor-title">
-                            <h3 className="doctor-name">Dr. {doctor.name}</h3>
+                            <h3 className="doctor-name"> {doctor.name}</h3>
                             <p className="doctor-specialty">{doctor.specialization}</p>
                         </div>
                     </div>

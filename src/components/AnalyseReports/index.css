@@ -255,6 +255,7 @@
     cursor: pointer;
     transition: background 0.2s;
     margin-top: 1rem;
+    padding-bottom: 40px;
 }
 
 .report-button:hover {

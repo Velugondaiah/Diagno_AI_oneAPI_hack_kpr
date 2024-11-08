@@ -111,7 +111,7 @@ class Header extends Component {
           />
           <ul className="unorder-list">
             <Link to="/" className="link">
-              <li>Home</li>
+              <li >Home</li>
             </Link>
             <Link to="/about-us" className="link">
               <li>About Us</li>
