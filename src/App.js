@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Profile from './components/Profile';
 
 import LoginForm from "./components/LoginForm";
@@ -15,31 +15,32 @@ import Appointments from './components/Appointments';
 import XrayReport from './components/XrayReport';
 import FileUpload from './components/FileUpload';
 import ReportAnalysis from './components/ReportAnalysis';
+import BookingHistory from './components/BookingHistory';
 
 
 
 
 const App = () => (
-  <BrowserRouter>
+  <Router>
     <Switch>
+      <Route exact path="/" component={Home} />
       <Route exact path="/login" component={LoginForm} />
-      <Route exact path="/signup"  component={SignUp}/>
-      <ProtestComp exact path="/" component={Home} />
-      <ProtestComp exact path="/about-us" component={Services} />
-      <ProtestComp exact path="/services" component={AboutUs} />
-      <ProtestComp exact path ="/home-content" component = {HomeContent} />
-      <ProtestComp exact path = "/reports" component = {AnalyseReports} />
-      <ProtestComp exact path = "/x-ray-reports" component = {XrayReport} />
-      <ProtestComp exact path = "/doctors-details"  component = {DoctorsList} />
-      <ProtestComp to ="/appointments" component={Appointments} />
-      <ProtestComp path="/not-found" component={NotFound} />
-      <Route path="/profile" component={Profile} />
+      <Route exact path="/signup" component={SignUp} />
+      <Route exact path="/profile" component={Profile} />
+      <Route exact path="/booking-history" component={BookingHistory} />
+      <Route exact path="/services" component={ AboutUs} />
+      <Route exact path="/about-us" component={Services} />
+      <Route exact path="/home-content" component={HomeContent} />
+      <Route exact path="/reports" component={AnalyseReports} />
+      <Route exact path="/x-ray-reports" component={XrayReport} />
+      <Route exact path="/doctors-details" component={DoctorsList} />
+      <Route exact path="/appointments" component={Appointments} />
+      <Route exact path="/not-found" component={NotFound} />
       <FileUpload />
-      <ReportAnalysis />
+      {/* <ReportAnalysis /> */}
+      
     </Switch>
-  </BrowserRouter>
- 
-
+  </Router>
 );
 
 export default App;

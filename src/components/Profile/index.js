@@ -1,137 +1,107 @@
 import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import Header from '../Header';
 import './index.css';
 
 const Profile = () => {
-    const [userData, setUserData] = useState(null);
-    const [profileImage, setProfileImage] = useState(null);
+    const [userDetails, setUserDetails] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const history = useHistory();
 
     useEffect(() => {
-        const token = Cookies.get('jwt_token');
-        if (!token) {
-            history.push('/login');
-            return;
-        }
-        fetchUserProfile();
-    }, [history]);
+        const fetchUserProfile = async () => {
+            try {
+                const jwtToken = Cookies.get('jwt_token');
+                const userId = localStorage.getItem('user_id');
 
-    const fetchUserProfile = async () => {
-        try {
-            const token = Cookies.get('jwt_token');
-            const response = await fetch('http://localhost:3005/user-profile', {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                },
-            });
-
-            if (!response.ok) {
-                if (response.status === 401) {
-                    history.push('/login');
-                    return;
+                if (!jwtToken) {
+                    throw new Error('Authentication required');
                 }
-                throw new Error('Failed to fetch profile');
+
+                const response = await fetch(`http://localhost:3008/api/user/${userId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${jwtToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Failed to fetch user details');
+                }
+
+                const data = await response.json();
+                setUserDetails(data);
+            } catch (err) {
+                console.error('Profile fetch error:', err);
+                setError(err.message);
+            } finally {
+                setLoading(false);
             }
+        };
 
-            const data = await response.json();
-            console.log('Profile data:', data);
-            setUserData(data);
-            setProfileImage(data.profile_image);
-            setLoading(false);
-        } catch (error) {
-            console.error('Error fetching profile:', error);
-            setError(error.message);
-            setLoading(false);
-        }
-    };
+        fetchUserProfile();
+    }, []);
 
-    const handleImageUpload = async (event) => {
-        const file = event.target.files[0];
-        if (!file) return;
+    if (loading) {
+        return <div className="loading">Loading...</div>;
+    }
 
-        const formData = new FormData();
-        formData.append('profileImage', file);
-
-        try {
-            const token = Cookies.get('jwt_token');
-            const response = await fetch('http://localhost:3005/upload-profile-image', {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-                body: formData,
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to upload image');
-            }
-
-            const data = await response.json();
-            setProfileImage(data.imageUrl);
-            fetchUserProfile();
-        } catch (error) {
-            console.error('Error uploading image:', error);
-            setError(error.message);
-        }
-    };
-
-    if (loading) return <div className="loading">Loading...</div>;
-    if (error) return <div className="error">Error: {error}</div>;
-    if (!userData) return <div className="error">No user data found</div>;
-
-    return (
-        <>
-            <Header />
-            <div className="profile-container">
-                <div className="profile-image-section">
-                    <img 
-                        src={profileImage ? `http://localhost:3005${profileImage}` : '/default-avatar.png'} 
-                        alt="Profile" 
-                        className="profile-image"
-                    />
-                    <div className="image-actions">
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImageUpload}
-                            id="image-upload"
-                            hidden
-                        />
-                        <label htmlFor="image-upload" className="upload-btn">
-                            Upload Photo
-                        </label>
-                    </div>
-                </div>
-                <div className="profile-details">
-                    <h2>{userData.firstname} {userData.lastname}</h2>
-                    <div className="detail-item">
-                        <span>Username:</span> {userData.username}
-                    </div>
-                    <div className="detail-item">
-                        <span>Email:</span> {userData.email}
-                    </div>
-                    <div className="detail-item">
-                        <span>Phone:</span> {userData.phone_number || 'Not provided'}
-                    </div>
-                    <div className="detail-item">
-                        <span>Date of Birth:</span> {userData.date_of_birth || 'Not provided'}
-                    </div>
-                    <div className="detail-item">
-                        <span>Gender:</span> {userData.gender || 'Not provided'}
-                    </div>
-                    <div className="detail-item">
-                        <span>Address:</span> {userData.address || 'Not provided'}
-                    </div>
+    if (error) {
+        return (
+            <div className="error-container">
+                <div className="error">
+                    <h3>Error loading profile</h3>
+                    <p>{error}</p>
                 </div>
             </div>
-        </>
+        );
+    }
+
+    return (
+        <div className="profile-container">
+            <div className="profile-header">
+                <h2>User Profile</h2>
+            </div>
+            
+            <div className="profile-details">
+                <div className="detail-item">
+                    <span>Username</span>
+                    <div>{userDetails.username}</div>
+                </div>
+                
+                <div className="detail-item">
+                    <span>First Name</span>
+                    <div>{userDetails.firstname}</div>
+                </div>
+                
+                <div className="detail-item">
+                    <span>Last Name</span>
+                    <div>{userDetails.lastname}</div>
+                </div>
+                
+                <div className="detail-item">
+                    <span>Email</span>
+                    <div>{userDetails.email}</div>
+                </div>
+                
+                <div className="detail-item">
+                    <span>Phone</span>
+                    <div>{userDetails.phoneNumber}</div>
+                </div>
+                
+                <div className="detail-item">
+                    <span>Date of Birth</span>
+                    <div>{userDetails.dateOfBirth}</div>
+                </div>
+                
+                <div className="detail-item">
+                    <span>Gender</span>
+                    <div>{userDetails.gender}</div>
+                </div>
+            </div>
+        </div>
     );
 };
 
 export default Profile;
-        

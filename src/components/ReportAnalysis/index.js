@@ -9,7 +9,6 @@ class ReportAnalysis extends Component {
     isLoading: false,
     error: null
   };
-
   handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {

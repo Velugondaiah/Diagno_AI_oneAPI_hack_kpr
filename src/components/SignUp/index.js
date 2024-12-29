@@ -79,7 +79,7 @@ class SignUp extends Component {
         }
 
         try {
-            const response = await fetch("http://localhost:3008/signup", {
+            const response = await fetch("https://diagno-11.onrender.com/signup", {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",

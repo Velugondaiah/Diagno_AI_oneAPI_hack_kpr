@@ -28,7 +28,7 @@ class Appointments extends Component {
     error: null,
     time: '',
   }
-
+//
   componentDidMount() {
     // Get the specialist from the location state
     const { location } = this.props;
@@ -334,12 +334,7 @@ class Appointments extends Component {
     const { isLoading, error, noDoctorsFound, doctorResults } = this.state;
 
     if (isLoading) {
-        return (
-            <div className="loading-spinner">
-                <div className="spinner"></div>
-                <p>Loading doctors...</p>
-            </div>
-        );
+        return <div className="loading-spinner">Loading...</div>;
     }
 
     if (error) {
@@ -347,32 +342,71 @@ class Appointments extends Component {
     }
 
     if (noDoctorsFound) {
-        return (
-            <div className="no-doctors-message">
-                No doctors found for the selected criteria.
-            </div>
-        );
+        return <div className="no-doctors-message">No doctors found for the selected criteria.</div>;
     }
 
     return (
         <div className="doctor-cards">
             {doctorResults.map(doctor => (
                 <div key={doctor.id} className="doctor-card">
-                    <img 
-                        src={doctor.imageUrl}
-                        alt={doctor.name}
-                        className="doctor-image"
-                    />
-                    <div className="doctor-info">
-                        <h3>{doctor.name}</h3>
-                        <p>{doctor.specialization}</p>
-                       
-                        <p>Location: {doctor.location}</p>
-                        <p>Consultation Fee: ₹{doctor.appointmentCost}</p>
+                    <div className="doctor-header">
+                        <img 
+                            src={doctor.imageUrl} 
+                            alt={doctor.name}
+                            className="doctor-image"
+                        />
+                        <div className="doctor-main-info">
+                            <h3>Dr. {doctor.name}</h3>
+                            <div className="doctor-specialization">
+                                <i className="fas fa-user-md"></i>
+                                {doctor.specialization} Specialist
+                            </div>
+                            <div className="availability-badge">
+                                <i className="fas fa-clock"></i>
+                                Available Today
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="doctor-body">
+                        <div className="info-grid">
+                            <div className="info-item">
+                                <span className="info-label">Location</span>
+                                <span className="info-value">
+                                    <i className="fas fa-map-marker-alt"></i> {doctor.location}
+                                </span>
+                            </div>
+                            <div className="info-item">
+                                <span className="info-label">Experience</span>
+                                <span className="info-value">
+                                    <i className="fas fa-calendar-alt"></i> 8+ Years
+                                </span>
+                            </div>
+                            <div className="info-item">
+                                <span className="info-label">Rating</span>
+                                <div className="doctor-rating">
+                                    <i className="fas fa-star"></i>
+                                    {doctor.rating}
+                                </div>
+                            </div>
+                            <div className="info-item">
+                                <span className="info-label">Patients</span>
+                                <span className="info-value">
+                                    <i className="fas fa-users"></i> 1000+
+                                </span>
+                            </div>
+                        </div>
+
+                        <div className="appointment-cost">
+                            <span className="cost-label">Consultation Fee</span>
+                            <span className="cost-value">₹{doctor.appointmentCost}</span>
+                        </div>
+
                         <button 
                             className="select-doctor-btn"
                             onClick={() => this.handleDoctorSelect(doctor.id)}
                         >
+                            <i className="fas fa-calendar-check"></i>
                             Book Appointment
                         </button>
                     </div>

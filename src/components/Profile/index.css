@@ -1,10 +1,25 @@
+:root {
+    --primary-color: #4a90e2;
+    --secondary-color: #5c6bc0;
+    --accent-color: #7e57c2;
+    --background-color: #f5f7fa;
+    --text-primary: #2c3e50;
+    --text-secondary: #34495e;
+    --success-color: #2ecc71;
+    --error-color: #e74c3c;
+}
+
+body {
+    background-color: var(--background-color);
+}
+
 .profile-container {
     max-width: 800px;
     margin: 2rem auto;
-    padding: 2rem;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    background: linear-gradient(145deg, #ffffff, #f5f7fa);
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .profile-image-section {
@@ -45,56 +60,166 @@
 }
 
 .profile-details {
-    padding: 1rem;
-    background-color: #f8f9fa;
-    border-radius: 8px;
+    padding: 20px;
 }
 
 .profile-details h2 {
-    color: #333;
-    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+    font-size: 2.2rem;
     text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 3px solid var(--accent-color);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .detail-item {
-    margin: 1rem 0;
-    padding: 0.8rem;
-    border-bottom: 1px solid #dee2e6;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    margin: 20px 0;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    border-left: 5px solid var(--secondary-color);
+}
+
+.detail-item:hover {
+    transform: translateX(5px);
+    background: linear-gradient(to right, #ffffff, #f8f9fa);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid var(--primary-color);
 }
 
 .detail-item span {
-    font-weight: bold;
-    color: #495057;
+    min-width: 140px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-right: 20px;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.loading, .error {
+.detail-item div {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    flex: 1;
+    padding: 5px 10px;
+    background-color: rgba(74, 144, 226, 0.1);
+    border-radius: 6px;
+}
+
+/* Profile Header Section */
+.profile-header {
     text-align: center;
-    padding: 2rem;
-    font-size: 1.2rem;
-    color: #666;
+    margin-bottom: 40px;
+    padding: 20px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: 15px;
+    color: white;
+}
+
+.profile-header h2 {
+    margin: 0;
+    padding: 0;
+    border: none;
+    color: white;
+}
+
+/* Loading animation */
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    color: var(--primary-color);
+}
+
+.loading::after {
+    content: '';
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* Error styling */
+.error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+    padding: 20px;
 }
 
 .error {
-    color: #dc3545;
+    background: linear-gradient(to right, #fff5f5, #fff0f0);
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    max-width: 450px;
+    width: 100%;
+    border-left: 5px solid var(--error-color);
 }
 
-@media screen and (max-width: 576px) {
+.error h3 {
+    color: var(--error-color);
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.error button {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.error button:hover {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
     .profile-container {
         margin: 1rem;
-        padding: 1rem;
+        padding: 15px;
     }
 
-    .profile-image {
-        width: 150px;
-        height: 150px;
+    .profile-details h2 {
+        font-size: 1.8rem;
     }
 
     .detail-item {
         flex-direction: column;
         align-items: flex-start;
-        gap: 0.5rem;
     }
+
+    .detail-item span {
+        margin-bottom: 8px;
+        font-size: 1rem;
+    }
+
+    .detail-item div {
+        width: 100%;
+        font-size: 1rem;
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
