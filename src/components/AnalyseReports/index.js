@@ -6,6 +6,8 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import "./index.css";
 import { Oval } from 'react-loader-spinner'; // Import the specific loader, e.g., Oval
+import SpeechButton from '../SpeechButton';
+import { splitTextForTTS } from '../../utils/textUtils';
 
 const languages = [
     { id: "english", language: "English" },
@@ -208,10 +210,18 @@ class AnalyseReport extends Component {
                             {result.split('\n\n').map((section, index) => {
                                 if (section.trim()) {
                                     const [title, ...content] = section.split('\n');
+                                    const contentText = content.join('\n');
                                     return (
                                         <div key={index} className="result-section">
                                             <div className="qa-box">
-                                                <h3 className="question">{title}</h3>
+                                                <div className="section-header">
+                                                    <h3 className="question">{title}</h3>
+                                                    <SpeechButton 
+                                                        text={`${title}. ${contentText}`} 
+                                                        label={title.replace(/^\d+\.\s*/, '')}
+                                                        language={selectedLanguage}
+                                                    />
+                                                </div>
                                                 <div className="answer">
                                                     {content.map((line, lineIndex) => (
                                                         <p key={lineIndex}>{line.replace(/^-\s*/, '• ')}</p>
@@ -223,6 +233,15 @@ class AnalyseReport extends Component {
                                 }
                                 return null;
                             })}
+
+                            {/* Update the full analysis speech button */}
+                            <div className="full-analysis-speech">
+                                <SpeechButton 
+                                    text={result} 
+                                    label="Complete Analysis"
+                                    language={selectedLanguage}
+                                />
+                            </div>
 
                             {/* Add Book Appointment section */}
                             <div className="appointment-section">

@@ -5,6 +5,7 @@ import { FiUpload } from 'react-icons/fi';
 import axios from 'axios';
 import "./index.css";
 import { Oval } from 'react-loader-spinner'; // Import the specific loader, e.g., Oval
+import { useState } from "react"; // Add this import
 
 const languages = [
     { id: "english", language: "English" },
@@ -28,6 +29,25 @@ class XrayReport extends Component {
         error: null,
         loading: false, // New state for loading
         fileType: 'xray', // Add this to explicitly set file type
+        showAppointmentForm: false,
+        appointmentData: {
+            patient_name: "",
+            gender: "",
+            age: "",
+            phone_number: "",
+            address: "",
+            date: "",
+            time: "",
+            location: "",
+            specialist: "",
+            doctor_id: ""
+        },
+        locations: [],
+        doctors: [],
+        selectedDoctor: null,
+        availableTimeSlots: [],
+        appointmentError: null,
+        appointmentSuccess: false
     };
 
     // Handle file selection
@@ -91,6 +111,131 @@ class XrayReport extends Component {
                 error: error.response?.data?.details || error.message || 'Error processing your request',
                 loading: false 
             });
+        }
+    };
+
+    handleAppointmentSubmit = async (e) => {
+        e.preventDefault();
+        this.setState({ appointmentError: null });
+
+        const { doctor_id, date, time } = this.state.appointmentData;
+
+        // Check availability before booking
+        const isAvailable = await this.checkAvailability(doctor_id, date, time);
+        if (!isAvailable) {
+            this.setState({ 
+                appointmentError: 'This time slot is not available. Please choose another time.'
+            });
+            return;
+        }
+
+        try {
+            const response = await axios.post('http://localhost:3008/api/appointments', 
+                this.state.appointmentData
+            );
+
+            if (response.status === 201) {
+                this.setState({ 
+                    appointmentSuccess: true,
+                    showAppointmentForm: false 
+                });
+            }
+        } catch (error) {
+            this.setState({ 
+                appointmentError: error.response?.data?.message || 'Failed to book appointment' 
+            });
+        }
+    };
+
+    handleAppointmentInputChange = (e) => {
+        const { name, value } = e.target;
+        this.setState(prevState => ({
+            appointmentData: {
+                ...prevState.appointmentData,
+                [name]: value
+            }
+        }));
+    };
+
+    // Update the extractSpecialist method to match the format in your database
+    extractSpecialist = (result) => {
+        // Look for specialist in Required Actions section
+        const requiredActionsMatch = result.match(/4\.\s*Required Actions:[\s\S]*?Specialist[s]?:\s*(\w+)/i);
+        if (requiredActionsMatch && requiredActionsMatch[1]) {
+            return requiredActionsMatch[1].trim();
+        }
+        
+        // Fallback: Look for any mention of specialist
+        const generalMatch = result.match(/Specialist[s]?:\s*(\w+)/i);
+        return generalMatch ? generalMatch[1].trim() : 'General';
+    };
+
+    handleAppointmentClick = async () => {
+        const specialist = this.extractSpecialist(this.state.result);
+        
+        // First set the specialist
+        await this.setState(prevState => ({
+            showAppointmentForm: true,
+            appointmentData: {
+                ...prevState.appointmentData,
+                specialist
+            }
+        }));
+
+        // Then fetch locations
+        await this.fetchLocations();
+    };
+
+    checkAvailability = async (doctor_id, date, time) => {
+        try {
+            const response = await axios.get('http://localhost:3008/api/appointments/check-availability', {
+                params: { doctor_id, date, time }
+            });
+            return response.data.available;
+        } catch (error) {
+            console.error('Error checking availability:', error);
+            return false;
+        }
+    };
+
+    componentDidMount() {
+        this.fetchLocations();
+    }
+
+    fetchLocations = async () => {
+        try {
+            const response = await axios.get('http://localhost:3008/api/doctor-locations');
+            this.setState({ locations: response.data });
+        } catch (error) {
+            console.error('Error fetching locations:', error);
+        }
+    };
+
+    fetchDoctors = async (location, specialization) => {
+        try {
+            const response = await axios.get(`http://localhost:3008/api/doctor-locations/getDoctors`, {
+                params: { location, specialization }
+            });
+            this.setState({ doctors: response.data });
+        } catch (error) {
+            console.error('Error fetching doctors:', error);
+        }
+    };
+
+    handleLocationChange = async (e) => {
+        const location = e.target.value;
+        const specialist = this.state.appointmentData.specialist;
+        
+        this.setState(prevState => ({
+            appointmentData: {
+                ...prevState.appointmentData,
+                location,
+                doctor_id: '' // Reset doctor when location changes
+            }
+        }));
+
+        if (location && specialist) {
+            await this.fetchDoctors(location, specialist);
         }
     };
 
@@ -192,9 +337,65 @@ class XrayReport extends Component {
                     )}
 
                    {result && (
-                     <Link to="/appointments">
-                     <button className="report-button">Appointment</button>
-                 </Link>
+                     <div className="appointment-section">
+                         {!this.state.showAppointmentForm ? (
+                             <button 
+                                 className="report-button"
+                                 onClick={this.handleAppointmentClick}
+                             >
+                                 Book Appointment
+                             </button>
+                         ) : (
+                             <div className="appointment-form-container">
+                                 <h3>Book an Appointment</h3>
+                                 <form onSubmit={this.handleAppointmentSubmit}>
+                                     <div className="form-group">
+                                         <label>Specialist Type:</label>
+                                         <input
+                                             type="text"
+                                             value={this.state.appointmentData.specialist}
+                                             disabled
+                                             className="disabled-input"
+                                         />
+                                     </div>
+
+                                     <div className="form-group">
+                                         <label>Select Location:</label>
+                                         <select
+                                             name="location"
+                                             value={this.state.appointmentData.location}
+                                             onChange={this.handleLocationChange}
+                                             required
+                                         >
+                                             <option value="">Select Location</option>
+                                             {this.state.locations.map(loc => (
+                                                 <option key={loc.location} value={loc.location}>
+                                                     {loc.location}
+                                                 </option>
+                                             ))}
+                                         </select>
+                                     </div>
+
+                                     <div className="form-group">
+                                         <label>Select Doctor:</label>
+                                         <select
+                                             name="doctor_id"
+                                             value={this.state.appointmentData.doctor_id}
+                                             onChange={this.handleAppointmentInputChange}
+                                             required
+                                         >
+                                             <option value="">Select Doctor</option>
+                                             {this.state.doctors.map(doctor => (
+                                                 <option key={doctor.id} value={doctor.id}>
+                                                     Dr. {doctor.name}
+                                                 </option>
+                                             ))}
+                                         </select>
+                                     </div>
+                                 </form>
+                             </div>
+                         )}
+                     </div>
                    )}
                 </div>
             </>
