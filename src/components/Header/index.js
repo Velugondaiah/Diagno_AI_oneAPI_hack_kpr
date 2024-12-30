@@ -43,6 +43,7 @@ class Header extends Component {
 
   handleProfileClick = () => {
     const { history } = this.props;
+<<<<<<< HEAD
     console.log(history)
     // const userId = Cookies.get('id');
     const userId = localStorage.getItem('userData');
@@ -51,6 +52,16 @@ class Header extends Component {
     console.log(userId)
     console.log('Clicking profile with userId:', userId);
     history.push(`/profile`);
+=======
+<<<<<<< HEAD
+    const userId = Cookies.get('user_id');
+    console.log('Clicking profile with userId:', userId);
+    history.push(`/profile/${userId}`);
+=======
+    console.log('Profile clicked');
+    history.push('/profile');
+>>>>>>> 57255db63019848dae9569612ef4e4c7f2b4b4f5
+>>>>>>> a86ec2886da0fa7cf5e23bba64238e91a5234ec0
     this.setState({ isSidebarOpen: false });
   };
 
@@ -117,7 +128,7 @@ class Header extends Component {
           />
           <ul className="unorder-list">
             <Link to="/" className="link">
-              <li>Home</li>
+              <li >Home</li>
             </Link>
             <Link to="/about-us" className="link">
               <li>About Us</li>

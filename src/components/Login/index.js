@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Cookies from 'js-cookie';
@@ -18,3 +19,6 @@ const Login = () => {
 
     // ... rest of the component ...
 }; 
+=======
+ 
+>>>>>>> a86ec2886da0fa7cf5e23bba64238e91a5234ec0

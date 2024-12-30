@@ -1,5 +1,9 @@
-/* Write your CSS here */
+/* Main Container */
 .main-appointment-bg-container {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a86ec2886da0fa7cf5e23bba64238e91a5234ec0
   background-image: linear-gradient(to bottom, #fbc7d4, #9796f0);
   min-height: 100vh;
   padding: 1px;
@@ -511,4 +515,329 @@ select.input:focus {
   display: inline-flex;
   align-items: center;
   gap: 4px;
+<<<<<<< HEAD
+=======
+=======
+    background: #f0f2f5;
+    min-height: 100vh;
+    padding: 30px 20px;
+}
+
+.appointment-card-container {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Form Layout with increased gaps */
+.form-and-image-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.form {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #eee;
+}
+
+/* Form Elements Spacing */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.label {
+    display: block;
+    color: #444;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+/* Headings */
+.main-heading {
+    color: #333;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.specialist-section {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.specialist-heading {
+    color: #2563eb;
+    font-size: 16px;
+    margin: 0;
+}
+
+/* Form Elements */
+.input {
+    width: 100%;
+    height: 40px;
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+}
+
+select.input {
+    height: 45px;
+    appearance: none;
+    background: url("data:image/svg+xml,<svg height='10px' width='10px' viewBox='0 0 16 16' fill='%23000000' xmlns='http://www.w3.org/2000/svg'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>") no-repeat;
+    background-position: calc(100% - 12px) center;
+    background-color: white;
+    padding-right: 30px;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+/* Radio Buttons */
+.radio-container {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    padding: 0 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+.radio {
+    margin-right: 6px;
+}
+
+/* Buttons */
+.proceed-button {
+    background: #2563eb;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.proceed-button:hover:not(:disabled) {
+    background: #1d4ed8;
+}
+
+.proceed-button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+/* Professional Doctor Cards Layout */
+.doctors-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    justify-content: center;
+}
+
+/* Doctor Card */
+.doctor-card {
+    width: 300px;
+    margin: 10px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Doctor Header */
+.doctor-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.doctor-image-container {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.doctor-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.doctor-title {
+    flex: 1;
+}
+
+.doctor-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.doctor-specialty {
+    font-size: 13px;
+    color: #64748b;
+}
+
+/* Doctor Info */
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 8px 0;
+}
+
+.info-item {
+    background: #f8fafc;
+    padding: 8px;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.info-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2563eb;
+}
+
+.info-label {
+    font-size: 11px;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+/* Location and Fee */
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #4b5563;
+    padding: 8px;
+    background: #f8fafc;
+    border-radius: 6px;
+}
+
+.detail-icon {
+    color: #2563eb;
+    font-size: 14px;
+}
+
+/* Book Button */
+.book-btn {
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 4px;
+}
+
+.book-btn:hover {
+    background: #1d4ed8;
+}
+
+/* Fee Display */
+.fee-display {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
+    background: #f1f5f9;
+    border-radius: 6px;
+    margin-top: 10px;
+}
+
+.fee-label {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.fee-amount {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2563eb;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .doctors-grid {
+        justify-content: center;
+    }
+}
+
+/* Utility Classes */
+.horizontal-line {
+    border: none;
+    height: 1px;
+    background: #eee;
+    margin: 40px 0;
+}
+
+.heading-button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 30px 0;
+    padding: 0 20px;
+}
+
+.list-heading {
+    font-size: 20px;
+    color: #333;
+    margin: 0;
+}
+
+.appointment-image {
+    width: 100%;
+    max-width: 400px;
+    display: block;
+    margin: auto;
+    align-self: center;
+}
+
+/* Add media query for responsive design */
+@media (max-width: 768px) {
+    .form-and-image-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .appointment-image {
+        max-width: 300px;
+        margin: 20px auto;
+    }
+>>>>>>> 57255db63019848dae9569612ef4e4c7f2b4b4f5
+>>>>>>> a86ec2886da0fa7cf5e23bba64238e91a5234ec0
 }

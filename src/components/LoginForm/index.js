@@ -13,8 +13,9 @@ class LoginForm extends Component {
   }
 
   onSubmitSuccess = (data) => {
-    const {history} = this.props
+    console.log('Login Response:', data); // Log the entire response
 
+<<<<<<< HEAD
 
    
     // Save token to cookies
@@ -32,6 +33,40 @@ class LoginForm extends Component {
     localStorage.setItem('userData', JSON.stringify(id))
     
     history.replace('/')
+=======
+    try {
+      // Save token to cookies
+      Cookies.set('jwt_token', data.jwt_token, {
+        expires: 30,
+        path: '/',
+      })
+
+      // Validate user data
+      if (!data.user || !data.user.id) {
+        console.error('Invalid user data in login response:', data);
+        throw new Error('Invalid user data received');
+      }
+
+      // Create user data object
+      const userData = {
+        id: data.user.id,
+        username: data.user.username,
+        email: data.user.email
+      };
+
+      console.log('Storing user data in localStorage:', userData);
+      localStorage.setItem('userData', JSON.stringify(userData));
+
+      const { history } = this.props;
+      history.replace('/');
+    } catch (error) {
+      console.error('Error in onSubmitSuccess:', error);
+      this.setState({
+        showError: true,
+        errorMsg: 'Error processing login response'
+      });
+    }
+>>>>>>> a86ec2886da0fa7cf5e23bba64238e91a5234ec0
   }
 
   submitForm = async event => {
@@ -39,7 +74,7 @@ class LoginForm extends Component {
     const {username, password} = this.state
     
     const userDetails = {username, password}
-    const url = 'http://localhost:3008/login'
+    const url = 'http://localhost:3000/login'
                 
     try {
       const response = await fetch(url, {
@@ -50,12 +85,21 @@ class LoginForm extends Component {
         },
         body: JSON.stringify(userDetails),
       })
+<<<<<<< HEAD
      
       console.log('Login Response:', response);
+=======
+      
+      console.log('Login Response Status:', response.status);
+>>>>>>> a86ec2886da0fa7cf5e23bba64238e91a5234ec0
       const data = await response.json()
-      console.log('Login Data:', data);
+      console.log('Login Response Data:', data);
       
       if (response.ok) {
+        // Validate the response data
+        if (!data.jwt_token || !data.user || !data.user.id) {
+          throw new Error('Invalid response format from server');
+        }
         this.onSubmitSuccess(data)
       
       } else {
@@ -68,7 +112,7 @@ class LoginForm extends Component {
       console.error('Login error:', error)
       this.setState({
         showError: true,
-        errorMsg: 'Connection error. Please try again.'
+        errorMsg: error.message || 'Connection error. Please try again.'
       })
     }
   }
@@ -100,7 +144,7 @@ class LoginForm extends Component {
           <img 
             alt="logo" 
             className="image" 
-            src="https://s3-alpha-sig.figma.com/img/0a45/f19e/7d4eedf4fa33fd9fc0b3c8a0c2a31d0f?Expires=1728259200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=SkHn~1X7XMdgF1GNThtucOukS4ysGKw0I2E6rRNXtGUtpk8FUk-aW~lRoBZvTIJOQNhssxbZZyEXvjoQhBN7DNu80qIcrkKURF4K2LK9DihnNdOL4yovII2Bs50MLhWTKK-y1VJkpKcO~gfMK6R5xjJVZW3v-lSs45SEopSlXvySZogxLed3d34HNJaK06q8md5gJHSdRujcnGBOgJpQ9416aWiO5hxBcX~Vy1tvoQ4ySqtpECN-eSyTCvyzBdLxUtr06av6JBbD8JL0vaJ8G5zN9CQ-6HZYtdnDl37vAm2qUc-ZhUe~hhxV~Sd~YXTx9EQ7kfidmPFUlCGr1HDRSg__" 
+            src="https://res.cloudinary.com/dbroxheos/image/upload/v1731033415/login-logo_w3ogs3.png" 
           />
           <h1 className="sign-in-heading">Sign In</h1>
           <form className="form-container" onSubmit={this.submitForm}>

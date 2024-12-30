@@ -11,6 +11,18 @@
 .logout{
     background-color: transparent;
     border: none;
+    margin-left: 4px;
+    color: black;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    padding: 8px 12px;
+    width: 100%;
+    text-align: start;
+    height: 50px;
+}
+
+.logout:hover {
+    background-color: #f0f0f0;
 }
 .link{
     text-decoration: none;

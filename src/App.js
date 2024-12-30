@@ -37,7 +37,15 @@ const App = () => (
       <Route exact path="/appointments" component={Appointments} />
       <Route exact path="/not-found" component={NotFound} />
       <FileUpload />
+<<<<<<< HEAD
       {/* <ReportAnalysis /> */}
+=======
+<<<<<<< HEAD
+      {/* <ReportAnalysis /> */}
+=======
+      
+>>>>>>> 57255db63019848dae9569612ef4e4c7f2b4b4f5
+>>>>>>> a86ec2886da0fa7cf5e23bba64238e91a5234ec0
       
     </Switch>
   </Router>
