@@ -8,7 +8,9 @@ import { withRouter } from 'react-router-dom';
 
 class Appointments extends Component {
   state = {
+
     appointmentsList: [],
+    user_id:'',
     patientName: '',
     gender:'',
     age : '',
@@ -30,17 +32,40 @@ class Appointments extends Component {
   }
 
   componentDidMount() {
-    // Get the specialist from the location state
+    // Check for default details
+    const userConfirmed = window.confirm(
+        'Do you want to use default details? Click OK for default or Cancel to enter your own.'
+    );
+
+    
+    if (userConfirmed) {
+        const userDetails = (localStorage.getItem('userDetails'));
+        
+        if (userDetails) {
+            const user = JSON.parse(userDetails);
+            const userId = JSON.parse(localStorage.getItem('userData'));
+            this.setState({
+                patientName: user.firstname                ,
+                phoneNumber: user.phonenumber ,
+                gender: "Male",
+                age:24,
+                user_id : userId
+            });
+        } else {
+            alert('No default details found in localStorage.');
+        }
+    }
+
+    // Get specialist from location state
     const { location } = this.props;
     if (location && location.state && location.state.specialist) {
-      this.setState({ 
-        specialist: location.state.specialist 
-      });
-      console.log("Received specialist:", location.state.specialist);
+        this.setState({ specialist: location.state.specialist });
     }
-    // Fetch locations when component mounts
+
+    // Fetch available locations
     this.fetchLocations();
-  }
+}
+
 
   fetchLocations = async () => {
     try {
@@ -284,6 +309,7 @@ class Appointments extends Component {
             // If available, proceed with booking
             const appointmentData = {
                 doctor_id: doctorId,
+                user_id :this.state.user_id,
                 patient_name: this.state.patientName,
                 gender: this.state.gender,
                 age: parseInt(this.state.age),
@@ -294,9 +320,15 @@ class Appointments extends Component {
                 specialist: this.state.specialist,
                 location: this.state.selectedLocation
             };
+            console.log("sssss")
+            console.log(appointmentData)
 
-            const response = await axios.post('http://localhost:3008/api/appointments', appointmentData);
-            
+            const response = await axios.post('http://localhost:3008/api/appointments', appointmentData, {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
+            console.log(response)
             // Debug log
             console.log('Server response:', response);
 
@@ -334,12 +366,7 @@ class Appointments extends Component {
     const { isLoading, error, noDoctorsFound, doctorResults } = this.state;
 
     if (isLoading) {
-        return (
-            <div className="loading-spinner">
-                <div className="spinner"></div>
-                <p>Loading doctors...</p>
-            </div>
-        );
+        return <div className="loading-spinner">Loading...</div>;
     }
 
     if (error) {
@@ -347,32 +374,71 @@ class Appointments extends Component {
     }
 
     if (noDoctorsFound) {
-        return (
-            <div className="no-doctors-message">
-                No doctors found for the selected criteria.
-            </div>
-        );
+        return <div className="no-doctors-message">No doctors found for the selected criteria.</div>;
     }
 
     return (
         <div className="doctor-cards">
             {doctorResults.map(doctor => (
                 <div key={doctor.id} className="doctor-card">
-                    <img 
-                        src={doctor.imageUrl}
-                        alt={doctor.name}
-                        className="doctor-image"
-                    />
-                    <div className="doctor-info">
-                        <h3>{doctor.name}</h3>
-                        <p>{doctor.specialization}</p>
-                       
-                        <p>Location: {doctor.location}</p>
-                        <p>Consultation Fee: ₹{doctor.appointmentCost}</p>
+                    <div className="doctor-header">
+                        <img 
+                            src={doctor.imageUrl} 
+                            alt={doctor.name}
+                            className="doctor-image"
+                        />
+                        <div className="doctor-main-info">
+                            <h3>Dr. {doctor.name}</h3>
+                            <div className="doctor-specialization">
+                                <i className="fas fa-user-md"></i>
+                                {doctor.specialization} Specialist
+                            </div>
+                            <div className="availability-badge">
+                                <i className="fas fa-clock"></i>
+                                Available Today
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="doctor-body">
+                        <div className="info-grid">
+                            <div className="info-item">
+                                <span className="info-label">Location</span>
+                                <span className="info-value">
+                                    <i className="fas fa-map-marker-alt"></i> {doctor.location}
+                                </span>
+                            </div>
+                            <div className="info-item">
+                                <span className="info-label">Experience</span>
+                                <span className="info-value">
+                                    <i className="fas fa-calendar-alt"></i> 8+ Years
+                                </span>
+                            </div>
+                            <div className="info-item">
+                                <span className="info-label">Rating</span>
+                                <div className="doctor-rating">
+                                    <i className="fas fa-star"></i>
+                                    {doctor.rating}
+                                </div>
+                            </div>
+                            <div className="info-item">
+                                <span className="info-label">Patients</span>
+                                <span className="info-value">
+                                    <i className="fas fa-users"></i> 1000+
+                                </span>
+                            </div>
+                        </div>
+
+                        <div className="appointment-cost">
+                            <span className="cost-label">Consultation Fee</span>
+                            <span className="cost-value">₹{doctor.appointmentCost}</span>
+                        </div>
+
                         <button 
                             className="select-doctor-btn"
                             onClick={() => this.handleDoctorSelect(doctor.id)}
                         >
+                            <i className="fas fa-calendar-check"></i>
                             Book Appointment
                         </button>
                     </div>
@@ -441,11 +507,13 @@ class Appointments extends Component {
                 onChange={this.titleFun}
               /> */}
                 <select onChange={this.gender} className='input' id="gender" name="gender" required>
-                <option value="" disabled selected>Select gender</option>
-                <option value="male" checked>Male</option>
+                <option value=""  selected>Select gender</option>
+                <option  defaultChecked value="male" checked>Male</option>
                 <option value="female">Female</option>
                 <option value="other">Other</option>
                 </select>
+
+
               <br />
               <label htmlFor="age" className="label">
                 Age
@@ -541,13 +609,13 @@ class Appointments extends Component {
             />
           </div>
           <hr className="horizontal-line" />
-          <div className="heading-button-container">
+          {/* <div className="heading-button-container">
             <h1 className="list-heading">Appointments</h1>
             <button type="button" className={stared} onClick={this.filterCheck}>
               Starred
             </button>
-          </div>
-          <ul className="unorder-list">
+          </div> */}
+          {/* <ul className="unorder-list">
             {appointmentsList.map(eachValue => (
               <AppointmentItem
                 key={eachValue.id}
@@ -555,7 +623,7 @@ class Appointments extends Component {
                 selectFavourite={this.selectFavourite}
               />
             ))}
-          </ul>
+          </ul> */}
         </div>
         <div className="doctor-results-container">
           {this.renderDoctorResults()}

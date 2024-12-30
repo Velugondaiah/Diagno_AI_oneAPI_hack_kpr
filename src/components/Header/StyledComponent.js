@@ -14,7 +14,11 @@ export const Sidebar = Styled.div`
 `;
 
 export const SidebarItem = Styled.div`
-  color: white;
-  margin: 20px 0;
+  padding: 15px;
   cursor: pointer;
-`
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+`;

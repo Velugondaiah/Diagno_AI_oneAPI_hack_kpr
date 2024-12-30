@@ -15,14 +15,21 @@ class LoginForm extends Component {
   onSubmitSuccess = (data) => {
     const {history} = this.props
 
+
+   
     // Save token to cookies
     Cookies.set('jwt_token', data.jwt_token, {
       expires: 30,
       path: '/',
     })
-
+    let id = data.user.id;
+    // let patientname = data.firstname;
+    // let age = data.age;
+    // let phoneNumber = data.phonenumber;
+    // let gender = data.gender;
     // Save user data to localStorage
-    localStorage.setItem('userData', JSON.stringify(data.user))
+    localStorage.setItem('userDetails',JSON.stringify(data.user))
+    localStorage.setItem('userData', JSON.stringify(id))
     
     history.replace('/')
   }
@@ -30,6 +37,7 @@ class LoginForm extends Component {
   submitForm = async event => {
     event.preventDefault()
     const {username, password} = this.state
+    
     const userDetails = {username, password}
     const url = 'http://localhost:3008/login'
                 
@@ -42,13 +50,14 @@ class LoginForm extends Component {
         },
         body: JSON.stringify(userDetails),
       })
-      
+     
       console.log('Login Response:', response);
       const data = await response.json()
       console.log('Login Data:', data);
       
       if (response.ok) {
         this.onSubmitSuccess(data)
+      
       } else {
         this.setState({
           showError: true,
